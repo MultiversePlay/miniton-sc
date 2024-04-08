@@ -1,0 +1,397 @@
+#pragma version =0.4.3;
+#pragma allow-post-modification;
+#pragma compute-asm-ltr;
+
+#include "MiniTon_DoublePkGameContract.headers.fc";
+#include "MiniTon_DoublePkGameContract.stdlib.fc";
+#include "MiniTon_DoublePkGameContract.constants.fc";
+#include "MiniTon_DoublePkGameContract.storage.fc";
+
+;;
+;; Contract DoublePkGameContract functions
+;;
+
+(int, slice, cell, cell, int, int) $DoublePkGameContract$_contract_init() impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = (null(), null(), null(), null(), null(), null());
+    $self'minTonForStorage = 50000000;
+    $self'owner = __tact_context_get_sender();
+    $self'matches = null();
+    $self'matchesResults = null();
+    $self'matchesCount = 0;
+    $self'matchesResultsCount = 0;
+    return ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount);
+}
+
+((int, slice, cell, cell, int, int), (int, int, slice, int, int, int, slice, int, int, int, int)) $DoublePkGameContract$_fun_getMatchInfo((int, slice, cell, cell, int, int) $self, int $id) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    if (null?($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $id)))) {
+        return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $MatchInfo$_constructor_id1_uid1_address1_status1_id2_uid2_address2_status2_amount_rewards_time(0, 0, __tact_context_get_sender(), 0, 0, 0, __tact_context_get_sender(), 0, 0, 0, 0));
+    } else {
+        return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $MatchInfo$_not_null($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $id))));
+    }
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_fun_joinMatch((int, slice, cell, cell, int, int) $self, (int, (int, int, slice, int, int, int, slice, int, int, int, int)) $v) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    var (($v'id, ($v'match_info'id1, $v'match_info'uid1, $v'match_info'address1, $v'match_info'status1, $v'match_info'id2, $v'match_info'uid2, $v'match_info'address2, $v'match_info'status2, $v'match_info'amount, $v'match_info'rewards, $v'match_info'time))) = $v;
+    var ($match_info'id1, $match_info'uid1, $match_info'address1, $match_info'status1, $match_info'id2, $match_info'uid2, $match_info'address2, $match_info'status2, $match_info'amount, $match_info'rewards, $match_info'time) = ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_getMatchInfo($v'id);
+    if (( (($match_info'id1 == 0)) ? (($match_info'id2 == 0)) : (false) )) {
+        throw_unless(47204, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+        $self'matches~__tact_dict_set_int_cell(257, $v'id, $MatchInfo$_store_cell(($v'match_info'id1, $v'match_info'uid1, $v'match_info'address1, $v'match_info'status1, $v'match_info'id2, $v'match_info'uid2, $v'match_info'address2, $v'match_info'status2, $v'match_info'amount, $v'match_info'rewards, $v'match_info'time)));
+        $self'matchesCount = ($self'matchesCount + 1);
+    } else {
+        if (( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) )) {
+            if (($v'match_info'id1 > 0)) {
+                $match_info'id1 = $v'match_info'id1;
+                $match_info'uid1 = $v'match_info'uid1;
+                $match_info'address1 = $v'match_info'address1;
+                $match_info'status1 = $v'match_info'status1;
+            }
+            if (($v'match_info'id2 > 0)) {
+                $match_info'id2 = $v'match_info'id2;
+                $match_info'uid2 = $v'match_info'uid2;
+                $match_info'address2 = $v'match_info'address2;
+                $match_info'status2 = $v'match_info'status2;
+            }
+            $match_info'amount = $v'match_info'amount;
+            $match_info'rewards = $v'match_info'rewards;
+            $match_info'time = $v'match_info'time;
+            $self'matches~__tact_dict_set_int_cell(257, $v'id, $MatchInfo$_store_cell(($v'match_info'id1, $v'match_info'uid1, $v'match_info'address1, $v'match_info'status1, $v'match_info'id2, $v'match_info'uid2, $v'match_info'address2, $v'match_info'status2, $v'match_info'amount, $v'match_info'rewards, $v'match_info'time)));
+        } else {
+            throw_unless(61082, ( (( (($match_info'id1 != 0)) ? (($match_info'status1 != 1)) : (false) )) ? (true) : (( (($match_info'id2 != 0)) ? (($match_info'status2 != 1)) : (false) )) ));
+            int $status = 0;
+            if (( (( (($match_info'id1 == $v'match_info'id1)) ? (($match_info'status1 == 0)) : (false) )) ? (( __tact_slice_eq_bits(__tact_context_get_sender(), $match_info'address1) )) : (false) )) {
+                $match_info'status1 = $v'match_info'status1;
+                $status = $match_info'status1;
+            } elseif (( (( (($match_info'id2 == $v'match_info'id1)) ? (($match_info'status2 == 0)) : (false) )) ? (( __tact_slice_eq_bits(__tact_context_get_sender(), $match_info'address2) )) : (false) )) {
+                $match_info'status2 = $v'match_info'status1;
+                $status = $match_info'status2;
+            }
+            if (($status == 1)) {
+                if (($Context$_get_value(__tact_context_get()) < $match_info'amount)) {
+                    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_reply(__gen_cell_comment_83fa64519f0dee0ac2dd63dc50275a11b4f4857dafce8cdcc40300e80e69d992());
+                } else {
+                    $self'matches~__tact_dict_set_int_cell(257, $v'id, $MatchInfo$_store_cell(($v'match_info'id1, $v'match_info'uid1, $v'match_info'address1, $v'match_info'status1, $v'match_info'id2, $v'match_info'uid2, $v'match_info'address2, $v'match_info'status2, $v'match_info'amount, $v'match_info'rewards, $v'match_info'time)));
+                }
+            } else {
+                ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_reply(__gen_cell_comment_554ad99a7a882ae1606863a077fcfc501d2002b462758c94ada76314ca2415fa());
+            }
+        }
+    }
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_fun_deleteMatchInfo((int, slice, cell, cell, int, int) $self, int $id) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    if ((~ null?($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $id))))) {
+        $self'matches~__tact_dict_set_int_cell(257, $id, $MatchInfo$_store_opt(null()));
+        $self'matchesCount = ($self'matchesCount - 1);
+    }
+    if ((~ null?($MatchResult$_load_opt(__tact_dict_get_int_cell($self'matchesResults, 257, $id))))) {
+        $self'matchesResults~__tact_dict_set_int_cell(257, $id, $MatchResult$_store_opt(null()));
+        $self'matchesResultsCount = ($self'matchesResultsCount - 1);
+    }
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_fun_sendRewards((int, slice, cell, cell, int, int) $self, slice $address, (int, int, slice, slice, int, int, int) $mr, slice $msg1, slice $msg2) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    var (($mr'id, $mr'victory_uid, $mr'defeat_uid, $mr'score, $mr'total_amount, $mr'rewards, $mr'time)) = $mr;
+    int $winnerRewards = $mr'rewards;
+    int $matchBalance = ($mr'total_amount - $mr'rewards);
+    if (($mr'total_amount < ((__tact_my_balance() - $Context$_get_value(__tact_context_get())) - $self'minTonForStorage))) {
+        $global_send($SendParameters$_constructor_to_bounce_value_mode_body($address, true, $winnerRewards, 2, $String$_fun_asComment($msg1)));
+        $matchBalance = min(($mr'total_amount - $mr'rewards), (((__tact_my_balance() - $Context$_get_value(__tact_context_get())) - $self'minTonForStorage) - $mr'rewards));
+        $global_send($SendParameters$_constructor_to_bounce_value_mode_body(__tact_context_get_sender(), true, $matchBalance, 2, $String$_fun_asComment($msg2)));
+        $self'matchesResults~__tact_dict_set_int_cell(257, $mr'id, $MatchResult$_store_cell(($mr'id, $mr'victory_uid, $mr'defeat_uid, $mr'score, $mr'total_amount, $mr'rewards, $mr'time)));
+        $self'matches~__tact_dict_set_int_cell(257, $mr'id, $MatchInfo$_store_opt(null()));
+    }
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_fun_giveRewards((int, slice, cell, cell, int, int) $self, ((int, int, slice, slice, int, int, int), slice, slice, (cell, int, int)) $v) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    var ((($v'matchResult'id, $v'matchResult'victory_uid, $v'matchResult'defeat_uid, $v'matchResult'score, $v'matchResult'total_amount, $v'matchResult'rewards, $v'matchResult'time), $v'msg1, $v'msg2, ($v'delete'arr, $v'delete'length, $v'delete'start))) = $v;
+    var ($mr'id, $mr'victory_uid, $mr'defeat_uid, $mr'score, $mr'total_amount, $mr'rewards, $mr'time) = ($v'matchResult'id, $v'matchResult'victory_uid, $v'matchResult'defeat_uid, $v'matchResult'score, $v'matchResult'total_amount, $v'matchResult'rewards, $v'matchResult'time);
+    var ($delete'arr, $delete'length, $delete'start) = ($v'delete'arr, $v'delete'length, $v'delete'start);
+    var ($match_info'id1, $match_info'uid1, $match_info'address1, $match_info'status1, $match_info'id2, $match_info'uid2, $match_info'address2, $match_info'status2, $match_info'amount, $match_info'rewards, $match_info'time) = ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_getMatchInfo($mr'id);
+    if (( (($match_info'id1 > 0)) ? (($match_info'id2 > 0)) : (false) )) {
+        if (($mr'victory_uid == $match_info'uid1)) {
+            ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_sendRewards($match_info'address1, ($mr'id, $mr'victory_uid, $mr'defeat_uid, $mr'score, $mr'total_amount, $mr'rewards, $mr'time), $v'msg1, $v'msg2);
+        } elseif (($mr'victory_uid == $match_info'uid2)) {
+            ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_sendRewards($match_info'address2, ($mr'id, $mr'victory_uid, $mr'defeat_uid, $mr'score, $mr'total_amount, $mr'rewards, $mr'time), $v'msg1, $v'msg2);
+        }
+    }
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_fun_deleteMatches((int, slice, cell, cell, int, int) $self, (cell, int, int) $v) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    var (($v'arr, $v'length, $v'start)) = $v;
+    if (($v'length > 0)) {
+        int $i = $v'start;
+        repeat ($v'length) {
+            ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_deleteMatchInfo(__tact_not_null(__tact_dict_get_int_int($v'arr, 257, $i, 257)));
+            $i = ($i + 1);
+        }
+    }
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), (int, int, slice, int, int, int, slice, int, int, int, int)) $DoublePkGameContract$_fun_matchInfo((int, slice, cell, cell, int, int) $self, int $match_id) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $MatchInfo$_not_null($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $match_id))));
+}
+
+((int, slice, cell, cell, int, int), (int, int, slice, slice, int, int, int)) $DoublePkGameContract$_fun_matchResult((int, slice, cell, cell, int, int) $self, int $match_id) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $MatchResult$_not_null($MatchResult$_load_opt(__tact_dict_get_int_cell($self'matchesResults, 257, $match_id))));
+}
+
+((int, slice, cell, cell, int, int), int) $DoublePkGameContract$_fun_matchesCount((int, slice, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $self'matchesCount);
+}
+
+((int, slice, cell, cell, int, int), int) $DoublePkGameContract$_fun_matchesResultsCount((int, slice, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $self'matchesResultsCount);
+}
+
+((int, slice, cell, cell, int, int), int) $DoublePkGameContract$_fun_balance((int, slice, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), __tact_my_balance());
+}
+
+((int, slice, cell, cell, int, int), int) $DoublePkGameContract$_fun_minTonForStorage((int, slice, cell, cell, int, int) $self) impure inline_ref {
+    var (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)) = $self;
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), $self'minTonForStorage);
+}
+
+;;
+;; Receivers of a Contract DoublePkGameContract
+;;
+
+(((int, slice, cell, cell, int, int)), ()) $DoublePkGameContract$_internal_binary_MatchInfoMessage((int, slice, cell, cell, int, int) $self, (int, (int, int, slice, int, int, int, slice, int, int, int, int)) $msg) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    var ($msg'id, ($msg'match_info'id1, $msg'match_info'uid1, $msg'match_info'address1, $msg'match_info'status1, $msg'match_info'id2, $msg'match_info'uid2, $msg'match_info'address2, $msg'match_info'status2, $msg'match_info'amount, $msg'match_info'rewards, $msg'match_info'time)) = $msg;
+    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_joinMatch($MatchInfoMessage$_tensor_cast(($msg'id, ($msg'match_info'id1, $msg'match_info'uid1, $msg'match_info'address1, $msg'match_info'status1, $msg'match_info'id2, $msg'match_info'uid2, $msg'match_info'address2, $msg'match_info'status2, $msg'match_info'amount, $msg'match_info'rewards, $msg'match_info'time))));
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+(((int, slice, cell, cell, int, int)), ()) $DoublePkGameContract$_internal_binary_MatchResultMessage((int, slice, cell, cell, int, int) $self, ((int, int, slice, slice, int, int, int), slice, slice, (cell, int, int)) $msg) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    var (($msg'matchResult'id, $msg'matchResult'victory_uid, $msg'matchResult'defeat_uid, $msg'matchResult'score, $msg'matchResult'total_amount, $msg'matchResult'rewards, $msg'matchResult'time), $msg'msg1, $msg'msg2, ($msg'delete'arr, $msg'delete'length, $msg'delete'start)) = $msg;
+    throw_unless(15509, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_giveRewards($MatchResultMessage$_tensor_cast((($msg'matchResult'id, $msg'matchResult'victory_uid, $msg'matchResult'defeat_uid, $msg'matchResult'score, $msg'matchResult'total_amount, $msg'matchResult'rewards, $msg'matchResult'time), $msg'msg1, $msg'msg2, ($msg'delete'arr, $msg'delete'length, $msg'delete'start))));
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+(((int, slice, cell, cell, int, int)), ()) $DoublePkGameContract$_internal_binary_MatchDeleteMessage((int, slice, cell, cell, int, int) $self, (cell, int, int) $msg) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    var ($msg'arr, $msg'length, $msg'start) = $msg;
+    throw_unless(15509, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_deleteMatches($MatchDeleteMessage$_tensor_cast(($msg'arr, $msg'length, $msg'start)));
+    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_reply(__gen_cell_comment_7e196d99e1c915d9d659f2fe0802abc2a7fe38f8eb427644ac86838264432458());
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_internal_text_5092b5dce0715a57dd969f5fb5a6f93025a0b02eab329470ca2b365ca0d7e93a((int, slice, cell, cell, int, int) $self) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    throw_unless(15509, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, 0, (128 + 2)));
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+((int, slice, cell, cell, int, int), ()) $DoublePkGameContract$_internal_text_beb2935a82089b154d32f99c4377aa960aa115366cc2c602755e36b97f505cec((int, slice, cell, cell, int, int) $self) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    throw_unless(15509, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, ((__tact_my_balance() - $Context$_get_value(__tact_context_get())) - $self'minTonForStorage), (64 + 2)));
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+(((int, slice, cell, cell, int, int)), ()) $DoublePkGameContract$_internal_binary_Withdraw((int, slice, cell, cell, int, int) $self, (int) $msg) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    var ($msg'amount) = $msg;
+    throw_unless(15509, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    int $amount = min($msg'amount, ((__tact_my_balance() - $Context$_get_value(__tact_context_get())) - $self'minTonForStorage));
+    throw_unless(54615, ($amount > 0));
+    $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, $amount, (64 + 2)));
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+(((int, slice, cell, cell, int, int)), ()) $DoublePkGameContract$_internal_binary_MinTonForStorage((int, slice, cell, cell, int, int) $self, (int) $msg) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    var ($msg'minTon) = $msg;
+    $self'minTonForStorage = $msg'minTon;
+    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_reply(__gen_cell_comment_8482c0571d832139901c5f513d794c48c4b84a4b881db26b323fe5d879dbe00b());
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+(((int, slice, cell, cell, int, int)), ()) $DoublePkGameContract$_internal_binary_Deploy((int, slice, cell, cell, int, int) $self, (int) $deploy) impure inline {
+    var ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount) = $self;
+    var ($deploy'queryId) = $deploy;
+    ($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount)~$DoublePkGameContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'minTonForStorage, $self'owner, $self'matches, $self'matchesResults, $self'matchesCount, $self'matchesResultsCount), ());
+}
+
+;;
+;; Get methods of a Contract DoublePkGameContract
+;;
+
+_ %matchInfo(int $$match_id) method_id(98967) {
+    int $match_id = $$match_id;
+    var self = $DoublePkGameContract$_contract_load();
+    var res = self~$DoublePkGameContract$_fun_matchInfo($match_id);
+    return $MatchInfo$_to_external(res);
+}
+
+_ %matchResult(int $$match_id) method_id(125033) {
+    int $match_id = $$match_id;
+    var self = $DoublePkGameContract$_contract_load();
+    var res = self~$DoublePkGameContract$_fun_matchResult($match_id);
+    return $MatchResult$_to_external(res);
+}
+
+_ %matchesCount() method_id(111153) {
+    var self = $DoublePkGameContract$_contract_load();
+    var res = self~$DoublePkGameContract$_fun_matchesCount();
+    return res;
+}
+
+_ %matchesResultsCount() method_id(86180) {
+    var self = $DoublePkGameContract$_contract_load();
+    var res = self~$DoublePkGameContract$_fun_matchesResultsCount();
+    return res;
+}
+
+_ %balance() method_id(104128) {
+    var self = $DoublePkGameContract$_contract_load();
+    var res = self~$DoublePkGameContract$_fun_balance();
+    return res;
+}
+
+_ %minTonForStorage() method_id(78083) {
+    var self = $DoublePkGameContract$_contract_load();
+    var res = self~$DoublePkGameContract$_fun_minTonForStorage();
+    return res;
+}
+
+_ supported_interfaces() method_id {
+    return (
+        "org.ton.introspection.v0"H >> 128,
+        "org.ton.abi.ipfs.v0"H >> 128,
+        "org.ton.deploy.lazy.v0"H >> 128,
+        "org.ton.chain.workchain.v0"H >> 128
+    );
+}
+
+_ get_abi_ipfs() method_id {
+    return "ipfs://QmbbJiMqJQVay9covzWvrGB6HN3zD6ujdUHMg2YXiNj45E";
+}
+
+_ lazy_deployment_completed() method_id {
+    return get_data().begin_parse().load_int(1);
+}
+
+;;
+;; Routing of a Contract DoublePkGameContract
+;;
+
+((int, slice, cell, cell, int, int), int) $DoublePkGameContract$_contract_router_internal((int, slice, cell, cell, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+    ;; Handle bounced messages
+    if (msg_bounced) {
+        return (self, true);
+    }
+    
+    ;; Parse incoming message
+    int op = 0;
+    if (slice_bits(in_msg) >= 32) {
+        op = in_msg.preload_uint(32);
+    }
+    
+    
+    ;; Receive MatchInfoMessage message
+    if (op == 2244588298) {
+        var msg = in_msg~$MatchInfoMessage$_load();
+        self~$DoublePkGameContract$_internal_binary_MatchInfoMessage(msg);
+        return (self, true);
+    }
+    
+    ;; Receive MatchResultMessage message
+    if (op == 398163858) {
+        var msg = in_msg~$MatchResultMessage$_load();
+        self~$DoublePkGameContract$_internal_binary_MatchResultMessage(msg);
+        return (self, true);
+    }
+    
+    ;; Receive MatchDeleteMessage message
+    if (op == 3160203234) {
+        var msg = in_msg~$MatchDeleteMessage$_load();
+        self~$DoublePkGameContract$_internal_binary_MatchDeleteMessage(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Withdraw message
+    if (op == 195467089) {
+        var msg = in_msg~$Withdraw$_load();
+        self~$DoublePkGameContract$_internal_binary_Withdraw(msg);
+        return (self, true);
+    }
+    
+    ;; Receive MinTonForStorage message
+    if (op == 2357442421) {
+        var msg = in_msg~$MinTonForStorage$_load();
+        self~$DoublePkGameContract$_internal_binary_MinTonForStorage(msg);
+        return (self, true);
+    }
+    
+    ;; Receive Deploy message
+    if (op == 2490013878) {
+        var msg = in_msg~$Deploy$_load();
+        self~$DoublePkGameContract$_internal_binary_Deploy(msg);
+        return (self, true);
+    }
+    
+    ;; Text Receivers
+    if (op == 0) {
+        var text_op = slice_hash(in_msg);
+        
+        ;; Receive "withdraw all" message
+        if (text_op == 0x5092b5dce0715a57dd969f5fb5a6f93025a0b02eab329470ca2b365ca0d7e93a) {
+            self~$DoublePkGameContract$_internal_text_5092b5dce0715a57dd969f5fb5a6f93025a0b02eab329470ca2b365ca0d7e93a();
+            return (self, true);
+        }
+        
+        ;; Receive "withdraw safe" message
+        if (text_op == 0xbeb2935a82089b154d32f99c4377aa960aa115366cc2c602755e36b97f505cec) {
+            self~$DoublePkGameContract$_internal_text_beb2935a82089b154d32f99c4377aa960aa115366cc2c602755e36b97f505cec();
+            return (self, true);
+        }
+    }
+    
+    return (self, false);
+}
+
+() recv_internal(int msg_value, cell in_msg_cell, slice in_msg) impure {
+    
+    ;; Context
+    var cs = in_msg_cell.begin_parse();
+    var msg_flags = cs~load_uint(4);
+    var msg_bounced = -(msg_flags & 1);
+    slice msg_sender_addr = __tact_verify_address(cs~load_msg_addr());
+    __tact_context = (msg_bounced, msg_sender_addr, msg_value, cs);
+    __tact_context_sender = msg_sender_addr;
+    
+    ;; Load contract data
+    var self = $DoublePkGameContract$_contract_load();
+    
+    ;; Handle operation
+    int handled = self~$DoublePkGameContract$_contract_router_internal(msg_bounced, in_msg);
+    
+    ;; Throw if not handled
+    throw_unless(130, handled);
+    
+    ;; Persist state
+    $DoublePkGameContract$_contract_store(self);
+}

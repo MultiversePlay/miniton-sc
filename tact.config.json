@@ -1,0 +1,10 @@
+{
+    "projects": [{
+        "name": "MiniTon",
+        "path": "./sources/DoublePkGameContract.tact",
+        "output": "./sources/output",
+        "options":{
+            
+        }
+    }]
+}

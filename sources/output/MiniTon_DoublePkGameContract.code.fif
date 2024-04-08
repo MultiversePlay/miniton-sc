@@ -1,0 +1,1455 @@
+ode_modules\\@tact-lang\\compiler\\stdlib\\stdlib.fc` `E:\\projects\\miniton\\miniton-sc\
+ode_modules\\@tact-lang\\compiler\\stdlib\\stdlib_ex.fc` `E:/projects/miniton/miniton-sc/sources/output/MiniTon_DoublePkGameContract.code.fc` incl:`E:/projects/miniton/miniton-sc/sources/output/MiniTon_DoublePkGameContract.headers.fc` incl:`E:/projects/miniton/miniton-sc/sources/output/MiniTon_DoublePkGameContract.stdlib.fc` incl:`E:/projects/miniton/miniton-sc/sources/output/MiniTon_DoublePkGameContract.constants.fc` incl:`E:/projects/miniton/miniton-sc/sources/output/MiniTon_DoublePkGameContract.storage.fc` 
+PROGRAM{
+  DECLPROC __tact_verify_address
+  DECLPROC __tact_load_address
+  DECLPROC __tact_store_address
+  DECLPROC __tact_my_balance
+  DECLPROC __tact_not_null
+  DECLPROC __tact_context_get
+  DECLPROC __tact_context_get_sender
+  DECLPROC __tact_store_bool
+  DECLPROC __tact_dict_get_int_int
+  DECLPROC __tact_dict_set_int_cell
+  DECLPROC __tact_dict_get_int_cell
+  DECLPROC __tact_slice_eq_bits
+  DECLPROC __tact_string_builder_start
+  DECLPROC __tact_string_builder_start_comment
+  DECLPROC __tact_string_builder_end
+  DECLPROC __tact_string_builder_append
+  DECLPROC $Deploy$_load
+  DECLPROC $DeployOk$_store
+  DECLPROC $DeployOk$_store_cell
+  DECLPROC $MatchInfo$_store
+  DECLPROC $MatchInfo$_store_cell
+  DECLPROC $MatchInfo$_not_null
+  DECLPROC $MatchInfo$_store_opt
+  DECLPROC $MatchInfo$_load
+  DECLPROC $MatchInfo$_as_optional
+  DECLPROC $MatchInfo$_load_opt
+  DECLPROC $MatchInfoMessage$_load
+  DECLPROC $MatchResult$_store
+  DECLPROC $MatchResult$_store_cell
+  DECLPROC $MatchResult$_not_null
+  DECLPROC $MatchResult$_store_opt
+  DECLPROC $MatchResult$_load
+  DECLPROC $MatchResult$_as_optional
+  DECLPROC $MatchResult$_load_opt
+  DECLPROC $MatchDeleteMessage$_load
+  DECLPROC $MatchResultMessage$_load
+  DECLPROC $Withdraw$_load
+  DECLPROC $MinTonForStorage$_load
+  DECLPROC $DoublePkGameContract$_store
+  DECLPROC $DoublePkGameContract$_load
+  DECLPROC $StateInit$_not_null
+  DECLPROC $Context$_get_value
+  DECLPROC $MatchInfo$_to_external
+  DECLPROC $MatchResult$_to_external
+  DECLPROC $DoublePkGameContract$_contract_init
+  DECLPROC $DoublePkGameContract$_contract_load
+  DECLPROC $DoublePkGameContract$_contract_store
+  DECLPROC $global_send
+  DECLPROC $String$_fun_asComment
+  DECLPROC $MatchInfo$_constructor_id1_uid1_address1_status1_id2_uid2_address2_status2_amount_rewards_time
+  DECLPROC $DoublePkGameContract$_fun_getMatchInfo
+  DECLPROC $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+  DECLPROC $DoublePkGameContract$_fun_forward
+  DECLPROC $DoublePkGameContract$_fun_reply
+  DECLPROC $DoublePkGameContract$_fun_joinMatch
+  DECLPROC $DoublePkGameContract$_fun_deleteMatchInfo
+  DECLPROC $SendParameters$_constructor_to_bounce_value_mode_body
+  DECLPROC $DoublePkGameContract$_fun_sendRewards
+  DECLPROC $DoublePkGameContract$_fun_giveRewards
+  DECLPROC $DoublePkGameContract$_fun_deleteMatches
+  DECLPROC $DoublePkGameContract$_fun_matchInfo
+  DECLPROC $DoublePkGameContract$_fun_matchResult
+  DECLPROC $DoublePkGameContract$_fun_matchesCount
+  DECLPROC $DoublePkGameContract$_fun_matchesResultsCount
+  DECLPROC $DoublePkGameContract$_fun_balance
+  DECLPROC $DoublePkGameContract$_fun_minTonForStorage
+  DECLPROC $DoublePkGameContract$_fun_notify
+  DECLPROC $SendParameters$_constructor_to_bounce_value_mode
+  DECLPROC $DeployOk$_constructor_queryId
+  DECLPROC $DoublePkGameContract$_internal_binary_MatchInfoMessage
+  DECLPROC $DoublePkGameContract$_internal_binary_MatchResultMessage
+  DECLPROC $DoublePkGameContract$_internal_binary_MatchDeleteMessage
+  DECLPROC $DoublePkGameContract$_internal_text_5092b5dce0715a57dd969f5fb5a6f93025a0b02eab329470ca2b365ca0d7e93a
+  DECLPROC $DoublePkGameContract$_internal_text_beb2935a82089b154d32f99c4377aa960aa115366cc2c602755e36b97f505cec
+  DECLPROC $DoublePkGameContract$_internal_binary_Withdraw
+  DECLPROC $DoublePkGameContract$_internal_binary_MinTonForStorage
+  DECLPROC $DoublePkGameContract$_internal_binary_Deploy
+  98967 DECLMETHOD %matchInfo
+  125033 DECLMETHOD %matchResult
+  111153 DECLMETHOD %matchesCount
+  86180 DECLMETHOD %matchesResultsCount
+  104128 DECLMETHOD %balance
+  78083 DECLMETHOD %minTonForStorage
+  113617 DECLMETHOD supported_interfaces
+  121275 DECLMETHOD get_abi_ipfs
+  115390 DECLMETHOD lazy_deployment_completed
+  DECLPROC $DoublePkGameContract$_contract_router_internal
+  DECLPROC recv_internal
+  DECLGLOBVAR __tact_context
+  DECLGLOBVAR __tact_context_sender
+  DECLGLOBVAR __tact_context_sys
+  DECLGLOBVAR __tact_randomized
+  __tact_verify_address PROCINLINE:<{
+    DUP
+    SBITS
+    267 PUSHINT
+    EQUAL
+    136 THROWIFNOT
+    DUP
+    11 PLDU
+    DUP
+    1279 PUSHINT
+    EQUAL
+    137 THROWIF
+    10 PUSHPOW2
+    EQUAL
+    136 THROWIFNOT
+  }>
+  __tact_load_address PROCINLINE:<{
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+  }>
+  __tact_store_address PROCINLINE:<{
+    __tact_verify_address INLINECALLDICT
+    STSLICER
+  }>
+  __tact_my_balance PROCINLINE:<{
+    BALANCE
+    FIRST
+  }>
+  __tact_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+  }>
+  __tact_context_get PROCINLINE:<{
+    __tact_context GETGLOB
+    4 UNTUPLE
+  }>
+  __tact_context_get_sender PROCINLINE:<{
+    __tact_context_sender GETGLOB
+  }>
+  __tact_store_bool PROCINLINE:<{
+    SWAP
+    1 STI
+  }>
+  __tact_dict_get_int_int PROCINLINE:<{
+    s1 s3 s3 XCHG3
+    DICTIGET
+    NULLSWAPIFNOT
+    IF:<{
+      SWAP
+      LDIX
+      DROP
+    }>ELSE<{
+      2DROP
+      PUSHNULL
+    }>
+  }>
+  __tact_dict_set_int_cell PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      -ROT
+      DICTIDEL
+      DROP
+    }>ELSE<{
+      s1 s3 s3 XCHG3
+      DICTISETREF
+    }>
+  }>
+  __tact_dict_get_int_cell PROCINLINE:<{
+    -ROT
+    DICTIGETREF
+    NULLSWAPIFNOT
+    IF:<{
+    }>ELSE<{
+      DROP
+      PUSHNULL
+    }>
+  }>
+  __tact_slice_eq_bits PROCINLINE:<{
+    SDEQ
+  }>
+  __tact_string_builder_start PROCINLINE:<{
+    NIL
+    SWAP
+    TPUSH
+    PUSHNULL
+    TPUSH
+  }>
+  __tact_string_builder_start_comment PROCINLINE:<{
+    NEWC
+    0 PUSHINT
+    SWAP
+    32 STU
+    __tact_string_builder_start INLINECALLDICT
+  }>
+  __tact_string_builder_end PROCINLINE:<{
+    UNCONS
+    SWAP
+    ENDC
+    WHILE:<{
+      OVER
+      ISNULL
+      NOT
+    }>DO<{
+      SWAP
+      UNCONS
+      -ROT
+      STREF
+      ENDC
+    }>
+    NIP
+  }>
+  __tact_string_builder_append PROCREF:<{
+    DUP
+    SREFS
+    OVER
+    SBITS
+    WHILE:<{
+      DUP
+      0 GTINT
+      s2 PUSH
+      0 GTINT
+      OR
+    }>DO<{
+      s0 s3 XCHG
+      UNCONS
+      127 PUSHINT
+      s2 PUSH
+      BBITS
+      3 RSHIFT#
+      SUB
+      s0 s5 XCHG
+      3 RSHIFT#
+      s5 s5 XCPU
+      MIN
+      DUP
+      0 GTINT
+      IF:<{
+        DUP
+        3 LSHIFT#
+        s1 s5 XCHG
+        LDSLICEX
+        s3 s3 XCHG2
+        STSLICER
+        s0 s1 s4 XCHG3
+      }>
+      -ROT
+      CONS
+      s4 s1 PUSH2
+      SUB
+      0 GTINT
+      IF:<{
+        NEWC
+        SWAP
+        CONS
+        s4 s4 XCHG2
+        SUB
+        3 LSHIFT#
+      }>ELSE<{
+        NIP
+        s3 POP
+        0 GTINT
+        IF:<{
+          LDREF
+          DROP
+          CTOS
+          DUP
+          SREFS
+          OVER
+          SBITS
+        }>ELSE<{
+          0 PUSHINT
+          DUP
+        }>
+      }>
+    }>
+    3 BLKDROP
+  }>
+  $Deploy$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2490013878 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    64 LDU
+    SWAP
+  }>
+  $DeployOk$_store PROCINLINE:<{
+    2952335191 PUSHINT
+    ROT
+    32 STU
+    64 STU
+  }>
+  $DeployOk$_store_cell PROCINLINE:<{
+    NEWC
+    SWAP
+    $DeployOk$_store INLINECALLDICT
+    ENDC
+  }>
+  $MatchInfo$_store PROCREF:<{
+    s10 s11 XCHG2
+    32 STU
+    s1 s8 XCHG
+    64 STU
+    s0 s6 XCHG2
+    __tact_store_address INLINECALLDICT
+    s1 s4 XCHG
+    8 STU
+    s1 s2 XCHG
+    32 STU
+    64 STU
+    SWAP
+    __tact_store_address INLINECALLDICT
+    8 STU
+    SWAP
+    STGRAMS
+    SWAP
+    STGRAMS
+    32 STU
+  }>
+  $MatchInfo$_store_cell PROCINLINE:<{
+    NEWC
+    11 -ROLL
+    $MatchInfo$_store INLINECALLDICT
+    ENDC
+  }>
+  $MatchInfo$_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+    11 UNTUPLE
+  }>
+  $MatchInfo$_store_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+      $MatchInfo$_not_null INLINECALLDICT
+      $MatchInfo$_store_cell INLINECALLDICT
+    }>
+  }>
+  $MatchInfo$_load PROCREF:<{
+    32 LDU
+    64 LDU
+    __tact_load_address INLINECALLDICT
+    SWAP
+    8 LDU
+    32 LDU
+    64 LDU
+    __tact_load_address INLINECALLDICT
+    SWAP
+    8 LDU
+    LDGRAMS
+    LDGRAMS
+    32 LDU
+    11 -ROLL
+  }>
+  $MatchInfo$_as_optional PROCINLINE:<{
+    11 TUPLE
+  }>
+  $MatchInfo$_load_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+      CTOS
+      $MatchInfo$_load INLINECALLDICT
+      1 11 BLKDROP2
+      $MatchInfo$_as_optional INLINECALLDICT
+    }>
+  }>
+  $MatchInfoMessage$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2244588298 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    257 PUSHINT
+    LDIX
+    LDREF
+    SWAP
+    CTOS
+    $MatchInfo$_load INLINECALLDICT
+    s11 POP
+    s11 s12 XCHG
+    10 ROLL
+  }>
+  $MatchResult$_store PROCREF:<{
+    1376326952 PUSHINT
+    s0 s8 XCHG2
+    32 STU
+    s1 s6 XCHG
+    32 STU
+    s1 s4 XCHG
+    32 STU
+    NEWC
+    s0 s3 XCHG2
+    STSLICER
+    ENDC
+    ROT
+    STREF
+    NEWC
+    ROT
+    STSLICER
+    ENDC
+    SWAP
+    STREF
+    SWAP
+    STGRAMS
+    SWAP
+    STGRAMS
+    32 STU
+  }>
+  $MatchResult$_store_cell PROCINLINE:<{
+    NEWC
+    7 -ROLL
+    $MatchResult$_store INLINECALLDICT
+    ENDC
+  }>
+  $MatchResult$_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+    7 UNTUPLE
+  }>
+  $MatchResult$_store_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+      $MatchResult$_not_null INLINECALLDICT
+      $MatchResult$_store_cell INLINECALLDICT
+    }>
+  }>
+  $MatchResult$_load PROCREF:<{
+    32 LDU
+    SWAP
+    1376326952 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    32 LDU
+    32 LDU
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDGRAMS
+    LDGRAMS
+    32 LDU
+    7 -ROLL
+  }>
+  $MatchResult$_as_optional PROCINLINE:<{
+    7 TUPLE
+  }>
+  $MatchResult$_load_opt PROCINLINE:<{
+    DUP
+    ISNULL
+    IF:<{
+      DROP
+      PUSHNULL
+    }>ELSE<{
+      CTOS
+      $MatchResult$_load INLINECALLDICT
+      1 7 BLKDROP2
+      $MatchResult$_as_optional INLINECALLDICT
+    }>
+  }>
+  $MatchDeleteMessage$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    3160203234 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    LDDICT
+    8 LDU
+    8 LDU
+    3 -ROLL
+  }>
+  $MatchResultMessage$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    398163858 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    $MatchResult$_load INLINECALLDICT
+    s0 s7 XCHG
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    LDREF
+    SWAP
+    CTOS
+    LDREF
+    SWAP
+    CTOS
+    SWAP
+    $MatchDeleteMessage$_load INLINECALLDICT
+    s3 POP
+    s4 s12 XCHG
+    s4 s5 XCHG
+    ROT
+  }>
+  $Withdraw$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    195467089 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    LDGRAMS
+    SWAP
+  }>
+  $MinTonForStorage$_load PROCINLINE:<{
+    32 LDU
+    SWAP
+    2357442421 PUSHINT
+    EQUAL
+    129 THROWIFNOT
+    LDGRAMS
+    SWAP
+  }>
+  $DoublePkGameContract$_store PROCINLINE:<{
+    s6 s5 XCHG2
+    STGRAMS
+    s0 s3 XCHG2
+    __tact_store_address INLINECALLDICT
+    STDICT
+    STDICT
+    s1 s2 XCHG
+    32 STU
+    32 STU
+  }>
+  $DoublePkGameContract$_load PROCINLINE:<{
+    LDGRAMS
+    __tact_load_address INLINECALLDICT
+    SWAP
+    LDDICT
+    LDDICT
+    32 LDU
+    32 LDU
+    6 -ROLL
+  }>
+  $StateInit$_not_null PROCINLINE:<{
+    DUP
+    ISNULL
+    128 THROWIF
+    2 UNTUPLE
+  }>
+  $Context$_get_value PROCINLINE:<{
+    s1 s3 XCHG
+    3 BLKDROP
+  }>
+  $MatchInfo$_to_external PROCINLINE:<{
+  }>
+  $MatchResult$_to_external PROCINLINE:<{
+  }>
+  $DoublePkGameContract$_contract_init PROCREF:<{
+    50000000 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    PUSHNULL
+    PUSHNULL
+    0 PUSHINT
+    DUP
+  }>
+  $DoublePkGameContract$_contract_load PROCREF:<{
+    c4 PUSH
+    CTOS
+    LDREF
+    SWAP
+    __tact_context_sys SETGLOB
+    1 LDI
+    SWAP
+    IFJMP:<{
+      $DoublePkGameContract$_load INLINECALLDICT
+      1 6 BLKDROP2
+    }>
+    DROP
+    MYADDR
+    11 PLDU
+    10 PUSHPOW2
+    EQUAL
+    137 THROWIFNOT
+    $DoublePkGameContract$_contract_init INLINECALLDICT
+  }>
+  $DoublePkGameContract$_contract_store PROCINLINE:<{
+    NEWC
+    __tact_context_sys GETGLOB
+    SWAP
+    STREF
+    TRUE
+    SWAP
+    1 STI
+    6 -ROLL
+    $DoublePkGameContract$_store INLINECALLDICT
+    ENDC
+    c4 POP
+  }>
+  $global_send PROCREF:<{
+    NEWC
+    1 PUSHINT
+    SWAP
+    2 STI
+    s0 s7 XCHG2
+    __tact_store_bool INLINECALLDICT
+    0 PUSHINT
+    SWAP
+    3 STI
+    s0 s5 XCHG2
+    __tact_store_address INLINECALLDICT
+    s0 s3 XCHG2
+    STGRAMS
+    0 PUSHINT
+    SWAP
+    105 STI
+    s3 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+    }>ELSE<{
+      s4 PUSH
+      ISNULL
+      NOT
+    }>
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      NEWC
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      s4 PUSH
+      ISNULL
+      NOT
+      IF:<{
+        TRUE
+        __tact_store_bool INLINECALLDICT
+        s0 s4 XCHG
+        __tact_not_null INLINECALLDICT
+        s0 s4 XCHG2
+        STREF
+      }>ELSE<{
+        s4 POP
+        s0 s3 XCHG
+        FALSE
+        __tact_store_bool INLINECALLDICT
+      }>
+      FALSE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      s0 s2 XCHG
+      ENDC
+      ROT
+      STREF
+    }>ELSE<{
+      s3 POP
+      s3 POP
+      SWAP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    OVER
+    ISNULL
+    NOT
+    IF:<{
+      TRUE
+      __tact_store_bool INLINECALLDICT
+      SWAP
+      __tact_not_null INLINECALLDICT
+      SWAP
+      STREF
+    }>ELSE<{
+      NIP
+      FALSE
+      __tact_store_bool INLINECALLDICT
+    }>
+    ENDC
+    SWAP
+    SENDRAWMSG
+  }>
+  $String$_fun_asComment PROCREF:<{
+    __tact_string_builder_start_comment INLINECALLDICT
+    SWAP
+    __tact_string_builder_append INLINECALLDICT
+    __tact_string_builder_end INLINECALLDICT
+  }>
+  $MatchInfo$_constructor_id1_uid1_address1_status1_id2_uid2_address2_status2_amount_rewards_time PROCINLINE:<{
+  }>
+  $DoublePkGameContract$_fun_getMatchInfo PROCREF:<{
+    s4 PUSH
+    257 PUSHINT
+    s2 PUSH
+    __tact_dict_get_int_cell INLINECALLDICT
+    $MatchInfo$_load_opt INLINECALLDICT
+    ISNULL
+    IFJMP:<{
+      DROP
+      0 PUSHINT
+      DUP
+      __tact_context_get_sender INLINECALLDICT
+      s1 s1 s1 PUSH3
+      __tact_context_get_sender INLINECALLDICT
+      s1 s1 s1 PUSH3
+      DUP
+      $MatchInfo$_constructor_id1_uid1_address1_status1_id2_uid2_address2_status2_amount_rewards_time INLINECALLDICT
+    }>
+    257 PUSHINT
+    s5 PUSH
+    s0 s2 XCHG
+    __tact_dict_get_int_cell INLINECALLDICT
+    $MatchInfo$_load_opt INLINECALLDICT
+    $MatchInfo$_not_null INLINECALLDICT
+  }>
+  $SendParameters$_constructor_bounce_to_value_mode_body_code_data PROCINLINE:<{
+  }>
+  $DoublePkGameContract$_fun_forward PROCREF:<{
+    PUSHNULL
+    PUSHNULL
+    s2 PUSH
+    ISNULL
+    NOT
+    IF:<{
+      2DROP
+      $StateInit$_not_null INLINECALLDICT
+      SWAP
+    }>ELSE<{
+      s2 POP
+    }>
+    s2 s4 XCHG
+    0 PUSHINT
+    s0 s3 XCHG
+    s0 s4 XCHG
+    66 PUSHINT
+    s2 s3 XCHG2
+    $SendParameters$_constructor_bounce_to_value_mode_body_code_data INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
+  $DoublePkGameContract$_fun_reply PROCINLINE:<{
+    __tact_context_get_sender INLINECALLDICT
+    SWAP
+    TRUE
+    PUSHNULL
+    $DoublePkGameContract$_fun_forward INLINECALLDICT
+  }>
+  $DoublePkGameContract$_fun_joinMatch PROCREF:<{
+    s5 17 s() XCHG
+    s4 16 s() XCHG
+    s3 s15 XCHG
+    s14 s13 s12 XCHG3
+    s11 PUSH
+    $DoublePkGameContract$_fun_getMatchInfo INLINECALLDICT
+    2DROP
+    s3 POP
+    s6 POP
+    s6 PUSH
+    0 EQINT
+    IF:<{
+      s2 PUSH
+      0 EQINT
+    }>ELSE<{
+      FALSE
+    }>
+    IF:<{
+      7 BLKDROP
+      47204 PUSHINT
+      __tact_context_get_sender INLINECALLDICT
+      s6 s(-1) PUXC
+      __tact_slice_eq_bits INLINECALLDICT
+      THROWANYIFNOT
+      s9 s10 XCHG
+      s8 s10 XCHG
+      s7 s10 XCHG
+      s6 s10 XCHG
+      s5 s10 XCHG
+      s4 17 s() XCHG
+      s3 16 s() XCHG
+      s15 s14 s13 XCHG3
+      257 PUSHINT
+      s0 s13 XCHG
+      $MatchInfo$_store_cell INLINECALLDICT
+      s1 s7 XCHG
+      s3 s3 s0 XCHG3
+      __tact_dict_set_int_cell INLINECALLDICT
+      s0 s2 XCHG
+      INC
+    }>ELSE<{
+      __tact_context_get_sender INLINECALLDICT
+      s12 s(-1) PUXC
+      __tact_slice_eq_bits INLINECALLDICT
+      IF:<{
+        7 BLKDROP
+        s10 PUSH
+        0 GTINT
+        IF:<{
+        }>
+        s6 PUSH
+        0 GTINT
+        IF:<{
+        }>
+        s9 s10 XCHG
+        s8 s10 XCHG
+        s7 s10 XCHG
+        s6 s10 XCHG
+        s5 s10 XCHG
+        s4 17 s() XCHG
+        s3 16 s() XCHG
+        s15 s14 s13 XCHG3
+        257 PUSHINT
+        s0 s13 XCHG
+        $MatchInfo$_store_cell INLINECALLDICT
+        s1 s7 XCHG
+        s3 s3 s0 XCHG3
+        __tact_dict_set_int_cell INLINECALLDICT
+      }>ELSE<{
+        61082 PUSHINT
+        s7 PUSH
+        0 NEQINT
+        IF:<{
+          s4 PUSH
+          1 NEQINT
+        }>ELSE<{
+          FALSE
+        }>
+        IF:<{
+          TRUE
+        }>ELSE<{
+          s3 PUSH
+          0 NEQINT
+          IF:<{
+            s6 PUSH
+            1 NEQINT
+          }>ELSE<{
+            FALSE
+          }>
+        }>
+        THROWANYIFNOT
+        0 PUSHINT
+        s0 s7 XCHG
+        18 s() PUSH
+        EQUAL
+        IF:<{
+          s0 s3 XCHG
+          0 EQINT
+        }>ELSE<{
+          s3 POP
+          FALSE
+        }>
+        IF:<{
+          __tact_context_get_sender INLINECALLDICT
+          s0 s4 XCHG2
+          __tact_slice_eq_bits INLINECALLDICT
+        }>ELSE<{
+          s3 POP
+          FALSE
+        }>
+        IF:<{
+          s2 s4 XCHG
+          4 BLKDROP
+          s8 PUSH
+        }>ELSE<{
+          s15 PUSH
+          EQUAL
+          IF:<{
+            s0 s2 XCHG
+            0 EQINT
+          }>ELSE<{
+            s2 POP
+            FALSE
+          }>
+          IF:<{
+            __tact_context_get_sender INLINECALLDICT
+            ROT
+            __tact_slice_eq_bits INLINECALLDICT
+          }>ELSE<{
+            NIP
+            FALSE
+          }>
+          IF:<{
+            NIP
+            s8 s(-1) PUXC
+          }>
+          SWAP
+        }>
+        1 EQINT
+        IF:<{
+          __tact_context_get INLINECALLDICT
+          $Context$_get_value INLINECALLDICT
+          SWAP
+          LESS
+          IF:<{
+            12 6 BLKDROP2
+            B{b5ee9c7241010101003000005c0000000054686520616d6f756e742070616964206973206c657373207468616e2074686520656e74727920666565e62d8c60} B>boc PUSHREF
+            $DoublePkGameContract$_fun_reply INLINECALLDICT
+          }>ELSE<{
+            s9 s10 XCHG
+            s8 s10 XCHG
+            s7 s10 XCHG
+            s6 s10 XCHG
+            s5 s10 XCHG
+            s4 17 s() XCHG
+            s3 16 s() XCHG
+            s15 s14 s13 XCHG3
+            257 PUSHINT
+            s0 s13 XCHG
+            $MatchInfo$_store_cell INLINECALLDICT
+            s1 s7 XCHG
+            s3 s3 s0 XCHG3
+            __tact_dict_set_int_cell INLINECALLDICT
+            s4 s5 XCHG
+            3 -ROLL
+          }>
+        }>ELSE<{
+          DROP
+          12 6 BLKDROP2
+          B{b5ee9c7241010101003800006c000000004a6f696e20746865206d61746368206661696c732c20726566756e64207468652072656d61696e696e6720616d6f756e742ebae0225a} B>boc PUSHREF
+          $DoublePkGameContract$_fun_reply INLINECALLDICT
+        }>
+        s4 s5 XCHG
+        3 ROLL
+      }>
+      s0 s2 XCHG
+    }>
+    s4 s5 XCHG
+    s3 s0 s0 XCHG3
+  }>
+  $DoublePkGameContract$_fun_deleteMatchInfo PROCREF:<{
+    s4 PUSH
+    257 PUSHINT
+    s2 PUSH
+    __tact_dict_get_int_cell INLINECALLDICT
+    $MatchInfo$_load_opt INLINECALLDICT
+    ISNULL
+    NOT
+    IF:<{
+      257 PUSHINT
+      PUSHNULL
+      $MatchInfo$_store_opt INLINECALLDICT
+      s2 PUSH
+      s3 s7 XCHG
+      SWAP
+      __tact_dict_set_int_cell INLINECALLDICT
+      s0 s2 XCHG
+      DEC
+      s0 s1 s4 XCHG3
+    }>
+    s3 PUSH
+    257 PUSHINT
+    s2 PUSH
+    __tact_dict_get_int_cell INLINECALLDICT
+    $MatchResult$_load_opt INLINECALLDICT
+    ISNULL
+    NOT
+    IF:<{
+      257 PUSHINT
+      PUSHNULL
+      $MatchResult$_store_opt INLINECALLDICT
+      s3 s5 XCHG
+      s1 s2 XCHG
+      __tact_dict_set_int_cell INLINECALLDICT
+      s0 s2 XCHG
+      DEC
+    }>ELSE<{
+      DROP
+    }>
+  }>
+  $SendParameters$_constructor_to_bounce_value_mode_body PROCINLINE:<{
+    s3 s4 XCHG
+    PUSHNULL
+    PUSHNULL
+  }>
+  $DoublePkGameContract$_fun_sendRewards PROCREF:<{
+    s3 PUSH
+    __tact_my_balance INLINECALLDICT
+    __tact_context_get INLINECALLDICT
+    $Context$_get_value INLINECALLDICT
+    SUB
+    17 s() PUSH
+    SUB
+    s6 s(-1) PUXC
+    LESS
+    IF:<{
+      TRUE
+      2 PUSHINT
+      s0 s4 XCHG
+      $String$_fun_asComment INLINECALLDICT
+      s4 s12 XCHG
+      s1 s3 XCHG
+      s1 s12 XCHG
+      $SendParameters$_constructor_to_bounce_value_mode_body INLINECALLDICT
+      $global_send INLINECALLDICT
+      s2 s1 PUSH2
+      SUB
+      __tact_my_balance INLINECALLDICT
+      __tact_context_get INLINECALLDICT
+      $Context$_get_value INLINECALLDICT
+      SUB
+      s15 PUSH
+      SUB
+      s3 PUSH
+      SUB
+      MIN
+      __tact_context_get_sender INLINECALLDICT
+      TRUE
+      2 PUSHINT
+      s0 s11 XCHG
+      $String$_fun_asComment INLINECALLDICT
+      s4 s3 s0 XCHG3
+      s1 s11 s0 XCHG3
+      $SendParameters$_constructor_to_bounce_value_mode_body INLINECALLDICT
+      $global_send INLINECALLDICT
+      s5 PUSH
+      5 -ROLL
+      257 PUSHINT
+      s0 s8 XCHG
+      $MatchResult$_store_cell INLINECALLDICT
+      s5 s5 s0 XCHG3
+      s5 s(-1) PUXC
+      __tact_dict_set_int_cell INLINECALLDICT
+      257 PUSHINT
+      PUSHNULL
+      $MatchInfo$_store_opt INLINECALLDICT
+      s3 s6 XCHG
+      s1 s5 s0 XCHG3
+      __tact_dict_set_int_cell INLINECALLDICT
+      s0 s3 XCHG
+    }>ELSE<{
+      11 BLKDROP
+    }>
+  }>
+  $DoublePkGameContract$_fun_giveRewards PROCREF:<{
+    3 BLKDROP
+    s5 s14 XCHG
+    s4 s13 XCHG
+    s3 s12 XCHG
+    s11 s10 s9 XCHG3
+    s8 PUSH
+    $DoublePkGameContract$_fun_getMatchInfo INLINECALLDICT
+    4 BLKDROP
+    s3 POP
+    s0 s5 XCHG
+    0 GTINT
+    IF:<{
+      0 GTINT
+    }>ELSE<{
+      DROP
+      FALSE
+    }>
+    IF:<{
+      s11 s2 PUXC
+      EQUAL
+      IF:<{
+        2 1 BLKDROP2
+        s6 s15 XCHG
+        s5 s14 XCHG
+        s4 s13 XCHG
+        s3 s12 XCHG
+        s11 s1 s9 XCHG3
+        8 -ROLL
+        s0 s10 XCHG
+        $DoublePkGameContract$_fun_sendRewards INLINECALLDICT
+      }>ELSE<{
+        DROP
+        s9 s1 PUXC
+        EQUAL
+        IF:<{
+          s6 s15 XCHG
+          s5 s14 XCHG
+          s4 s13 XCHG
+          s3 s12 XCHG
+          s11 s1 s9 XCHG3
+          8 -ROLL
+          s0 s10 XCHG
+          $DoublePkGameContract$_fun_sendRewards INLINECALLDICT
+          3 3 BLKSWAP
+        }>ELSE<{
+          DROP
+          s2 s14 XCHG
+          s12 POP
+          s12 POP
+          DROP
+          6 3 BLKDROP2
+        }>
+        3 3 BLKSWAP
+      }>
+      3 3 BLKSWAP
+    }>ELSE<{
+      4 BLKDROP
+      s2 s14 XCHG
+      s12 POP
+      s12 POP
+      DROP
+      6 3 BLKDROP2
+    }>
+    3 3 BLKSWAP
+  }>
+  $DoublePkGameContract$_fun_deleteMatches PROCREF:<{
+    OVER
+    0 GTINT
+    IF:<{
+      SWAP
+      REPEAT:<{
+        257 PUSHINT
+        s2 s(-1) s(-1) PUXCPU
+        s3 s(-1) PUXC
+        __tact_dict_get_int_int INLINECALLDICT
+        __tact_not_null INLINECALLDICT
+        s6 s8 XCHG
+        5 4 REVERSE
+        s3 s7 XCHG
+        s8 s7 s0 XCHG3
+        $DoublePkGameContract$_fun_deleteMatchInfo INLINECALLDICT
+        s0 s6 XCHG
+        INC
+        s5 s7 XCHG
+        s4 s6 XCHG
+        s3 s5 XCHG
+        s4 s3 s0 XCHG3
+      }>
+      2DROP
+    }>ELSE<{
+      3 BLKDROP
+    }>
+  }>
+  $DoublePkGameContract$_fun_matchInfo PROCREF:<{
+    257 PUSHINT
+    s5 PUSH
+    s0 s2 XCHG
+    __tact_dict_get_int_cell INLINECALLDICT
+    $MatchInfo$_load_opt INLINECALLDICT
+    $MatchInfo$_not_null INLINECALLDICT
+  }>
+  $DoublePkGameContract$_fun_matchResult PROCREF:<{
+    257 PUSHINT
+    s4 PUSH
+    s0 s2 XCHG
+    __tact_dict_get_int_cell INLINECALLDICT
+    $MatchResult$_load_opt INLINECALLDICT
+    $MatchResult$_not_null INLINECALLDICT
+  }>
+  $DoublePkGameContract$_fun_matchesCount PROCREF:<{
+    OVER
+  }>
+  $DoublePkGameContract$_fun_matchesResultsCount PROCREF:<{
+    DUP
+  }>
+  $DoublePkGameContract$_fun_balance PROCREF:<{
+    __tact_my_balance INLINECALLDICT
+  }>
+  $DoublePkGameContract$_fun_minTonForStorage PROCREF:<{
+    s5 PUSH
+  }>
+  $DoublePkGameContract$_fun_notify PROCINLINE:<{
+    __tact_context_get_sender INLINECALLDICT
+    SWAP
+    FALSE
+    PUSHNULL
+    $DoublePkGameContract$_fun_forward INLINECALLDICT
+  }>
+  $SendParameters$_constructor_to_bounce_value_mode PROCINLINE:<{
+    s2 s3 XCHG
+    PUSHNULL
+    PUSHNULL
+    PUSHNULL
+  }>
+  $DeployOk$_constructor_queryId PROCINLINE:<{
+  }>
+  $DoublePkGameContract$_internal_binary_MatchInfoMessage PROCINLINE:<{
+    $DoublePkGameContract$_fun_joinMatch INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_binary_MatchResultMessage PROCINLINE:<{
+    15509 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    18 s() PUSH
+    SWAP
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    $DoublePkGameContract$_fun_giveRewards INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_binary_MatchDeleteMessage PROCINLINE:<{
+    15509 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s9 s(-1) PUXC
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    $DoublePkGameContract$_fun_deleteMatches INLINECALLDICT
+    B{b5ee9c7241010101001600002800000000696e6372656d656e7420726566756e648aa29042} B>boc PUSHREF
+    $DoublePkGameContract$_fun_reply INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_text_5092b5dce0715a57dd969f5fb5a6f93025a0b02eab329470ca2b365ca0d7e93a PROCINLINE:<{
+    15509 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s6 s(-1) PUXC
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    __tact_context_get_sender INLINECALLDICT
+    TRUE
+    0 PUSHINT
+    130 PUSHINT
+    $SendParameters$_constructor_to_bounce_value_mode INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_text_beb2935a82089b154d32f99c4377aa960aa115366cc2c602755e36b97f505cec PROCINLINE:<{
+    15509 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s6 s(-1) PUXC
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    __tact_context_get_sender INLINECALLDICT
+    TRUE
+    __tact_my_balance INLINECALLDICT
+    __tact_context_get INLINECALLDICT
+    $Context$_get_value INLINECALLDICT
+    SUB
+    s8 PUSH
+    SUB
+    66 PUSHINT
+    $SendParameters$_constructor_to_bounce_value_mode INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_binary_Withdraw PROCINLINE:<{
+    15509 PUSHINT
+    __tact_context_get_sender INLINECALLDICT
+    s7 s(-1) PUXC
+    __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    __tact_my_balance INLINECALLDICT
+    __tact_context_get INLINECALLDICT
+    $Context$_get_value INLINECALLDICT
+    SUB
+    s7 PUSH
+    SUB
+    MIN
+    54615 PUSHINT
+    OVER
+    0 GTINT
+    THROWANYIFNOT
+    __tact_context_get_sender INLINECALLDICT
+    TRUE
+    ROT
+    66 PUSHINT
+    $SendParameters$_constructor_to_bounce_value_mode INLINECALLDICT
+    $global_send INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_binary_MinTonForStorage PROCINLINE:<{
+    s6 POP
+    B{b5ee9c7241010101002b0000520000000053657474696e67204d696e546f6e466f7253746f72616765207375636365737366756c6c795fed8738} B>boc PUSHREF
+    $DoublePkGameContract$_fun_reply INLINECALLDICT
+  }>
+  $DoublePkGameContract$_internal_binary_Deploy PROCINLINE:<{
+    $DeployOk$_constructor_queryId INLINECALLDICT
+    $DeployOk$_store_cell INLINECALLDICT
+    $DoublePkGameContract$_fun_notify INLINECALLDICT
+  }>
+  %matchInfo PROC:<{
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    6 ROLL
+    $DoublePkGameContract$_fun_matchInfo INLINECALLDICT
+    6 11 BLKDROP2
+    $MatchInfo$_to_external INLINECALLDICT
+  }>
+  %matchResult PROC:<{
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    6 ROLL
+    $DoublePkGameContract$_fun_matchResult INLINECALLDICT
+    6 7 BLKDROP2
+    $MatchResult$_to_external INLINECALLDICT
+  }>
+  %matchesCount PROC:<{
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    $DoublePkGameContract$_fun_matchesCount INLINECALLDICT
+    6 1 BLKDROP2
+  }>
+  %matchesResultsCount PROC:<{
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    $DoublePkGameContract$_fun_matchesResultsCount INLINECALLDICT
+    6 1 BLKDROP2
+  }>
+  %balance PROC:<{
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    $DoublePkGameContract$_fun_balance INLINECALLDICT
+    6 1 BLKDROP2
+  }>
+  %minTonForStorage PROC:<{
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    $DoublePkGameContract$_fun_minTonForStorage INLINECALLDICT
+    6 1 BLKDROP2
+  }>
+  supported_interfaces PROC:<{
+    123515602279859691144772641439386770278 PUSHINT
+    209801025412363888721030803524359905849 PUSHINT
+    42980537499636128163026532310500881091 PUSHINT
+    209474421377847335869795010607481022628 PUSHINT
+  }>
+  get_abi_ipfs PROC:<{
+    x{697066733a2f2f516d62624a694d714a5156617939636f767a577672474236484e337a4436756a6455484d67325958694e6a343545} PUSHSLICE
+  }>
+  lazy_deployment_completed PROC:<{
+    c4 PUSH
+    CTOS
+    1 LDI
+    SWAP
+  }>
+  $DoublePkGameContract$_contract_router_internal PROCREF:<{
+    c2 SAVE
+    SAMEALTSAVE
+    SWAP
+    IFJMP:<{
+      DROP
+      TRUE
+    }>
+    0 PUSHINT
+    OVER
+    SBITS
+    31 GTINT
+    IF:<{
+      DROP
+      DUP
+      32 PLDU
+    }>
+    DUP
+    2244588298 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $MatchInfoMessage$_load INLINECALLDICT
+      1 12 BLKDROP2
+      $DoublePkGameContract$_internal_binary_MatchInfoMessage INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    398163858 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $MatchResultMessage$_load INLINECALLDICT
+      1 12 BLKDROP2
+      $DoublePkGameContract$_internal_binary_MatchResultMessage INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    3160203234 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $MatchDeleteMessage$_load INLINECALLDICT
+      1 3 BLKDROP2
+      $DoublePkGameContract$_internal_binary_MatchDeleteMessage INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    195467089 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $Withdraw$_load INLINECALLDICT
+      NIP
+      $DoublePkGameContract$_internal_binary_Withdraw INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    2357442421 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $MinTonForStorage$_load INLINECALLDICT
+      NIP
+      $DoublePkGameContract$_internal_binary_MinTonForStorage INLINECALLDICT
+      TRUE
+    }>
+    DUP
+    2490013878 PUSHINT
+    EQUAL
+    IFJMP:<{
+      DROP
+      $Deploy$_load INLINECALLDICT
+      NIP
+      $DoublePkGameContract$_internal_binary_Deploy INLINECALLDICT
+      TRUE
+    }>
+    0 EQINT
+    IF:<{
+      HASHSU
+      DUP
+      36444242729032575060637673953708123039509959040849370188450484212211184560442 PUSHINT
+      EQUAL
+      IFJMP:<{
+        DROP
+        $DoublePkGameContract$_internal_text_5092b5dce0715a57dd969f5fb5a6f93025a0b02eab329470ca2b365ca0d7e93a INLINECALLDICT
+        TRUE
+        RETALT
+      }>
+      86254957005153482593167742035089344693437782575091241529406133056369733950700 PUSHINT
+      EQUAL
+      IFJMP:<{
+        $DoublePkGameContract$_internal_text_beb2935a82089b154d32f99c4377aa960aa115366cc2c602755e36b97f505cec INLINECALLDICT
+        TRUE
+        RETALT
+      }>
+    }>ELSE<{
+      DROP
+    }>
+    FALSE
+  }>
+  recv_internal PROC:<{
+    SWAP
+    CTOS
+    4 LDU
+    SWAP
+    1 PUSHINT
+    AND
+    NEGATE
+    SWAP
+    LDMSGADDR
+    SWAP
+    __tact_verify_address INLINECALLDICT
+    s0 s4 s2 PUXCPU
+    s0 s3 XCHG
+    4 TUPLE
+    __tact_context SETGLOB
+    s0 s2 XCHG
+    __tact_context_sender SETGLOB
+    $DoublePkGameContract$_contract_load INLINECALLDICT
+    2 6 BLKSWAP
+    $DoublePkGameContract$_contract_router_internal INLINECALLDICT
+    130 THROWIFNOT
+    $DoublePkGameContract$_contract_store INLINECALLDICT
+  }>
+}END>c
