@@ -1,0 +1,349 @@
+;;
+;; Type: StateInit
+;; TLB: _ code:^cell data:^cell = StateInit
+;;
+
+((cell, cell)) $StateInit$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (cell vvv'code, cell vvv'data) = __tact_tuple_destroy_2(v);
+    return (vvv'code, vvv'data);
+}
+
+;;
+;; Type: SendParameters
+;; TLB: _ bounce:bool to:address value:int257 mode:int257 body:Maybe ^cell code:Maybe ^cell data:Maybe ^cell = SendParameters
+;;
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_bounce_value_mode_body(slice to, int bounce, int value, int mode, cell body) inline {
+    return (bounce, to, value, mode, body, null(), null());
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline {
+    return (bounce, to, value, mode, body, code, data);
+}
+
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_bounce_value_mode(slice to, int bounce, int value, int mode) inline {
+    return (bounce, to, value, mode, null(), null(), null());
+}
+
+;;
+;; Type: Deploy
+;; Header: 0x946a98b6
+;; TLB: deploy#946a98b6 queryId:uint64 = Deploy
+;;
+
+(slice, ((int))) $Deploy$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2490013878);
+    var v'queryId = sc_0~load_uint(64);
+    return (sc_0, (v'queryId));
+}
+
+;;
+;; Type: DeployOk
+;; Header: 0xaff90f57
+;; TLB: deploy_ok#aff90f57 queryId:uint64 = DeployOk
+;;
+
+builder $DeployOk$_store(builder build_0, (int) v) inline {
+    var (v'queryId) = v;
+    build_0 = store_uint(build_0, 2952335191, 32);
+    build_0 = build_0.store_uint(v'queryId, 64);
+    return build_0;
+}
+
+cell $DeployOk$_store_cell((int) v) inline {
+    return $DeployOk$_store(begin_cell(), v).end_cell();
+}
+
+((int)) $DeployOk$_constructor_queryId(int queryId) inline {
+    return (queryId);
+}
+
+;;
+;; Type: Game
+;; TLB: _ id:uint32 name:^string = Game
+;;
+
+builder $Game$_store(builder build_0, (int, slice) v) inline {
+    var (v'id, v'name) = v;
+    build_0 = build_0.store_uint(v'id, 32);
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'name).end_cell());
+    return build_0;
+}
+
+(slice, ((int, slice))) $Game$_load(slice sc_0) inline {
+    var v'id = sc_0~load_uint(32);
+    var v'name = sc_0~load_ref().begin_parse();
+    return (sc_0, (v'id, v'name));
+}
+
+tuple $Game$_to_tuple(((int, slice)) v) inline {
+    var (v'id, v'name) = v;
+    return __tact_tuple_create_2(v'id, v'name);
+}
+
+;;
+;; Type: WinnerInfo
+;; TLB: _ telegramId:^string walletAddress:Maybe address score:^string ranking:uint8 prizeWon:coins prizeSentStatus:uint8 = WinnerInfo
+;;
+
+builder $WinnerInfo$_store(builder build_0, (slice, slice, slice, int, int, int) v) inline_ref {
+    var (v'telegramId, v'walletAddress, v'score, v'ranking, v'prizeWon, v'prizeSentStatus) = v;
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'telegramId).end_cell());
+    build_0 = __tact_store_address_opt(build_0, v'walletAddress);
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'score).end_cell());
+    build_0 = build_0.store_uint(v'ranking, 8);
+    build_0 = build_0.store_coins(v'prizeWon);
+    build_0 = build_0.store_uint(v'prizeSentStatus, 8);
+    return build_0;
+}
+
+cell $WinnerInfo$_store_cell((slice, slice, slice, int, int, int) v) inline {
+    return $WinnerInfo$_store(begin_cell(), v).end_cell();
+}
+
+(slice, ((slice, slice, slice, int, int, int))) $WinnerInfo$_load(slice sc_0) inline_ref {
+    var v'telegramId = sc_0~load_ref().begin_parse();
+    var v'walletAddress = sc_0~__tact_load_address_opt();
+    var v'score = sc_0~load_ref().begin_parse();
+    var v'ranking = sc_0~load_uint(8);
+    var v'prizeWon = sc_0~load_coins();
+    var v'prizeSentStatus = sc_0~load_uint(8);
+    return (sc_0, (v'telegramId, v'walletAddress, v'score, v'ranking, v'prizeWon, v'prizeSentStatus));
+}
+
+tuple $WinnerInfo$_as_optional((slice, slice, slice, int, int, int) v) inline {
+    var (v'telegramId, v'walletAddress, v'score, v'ranking, v'prizeWon, v'prizeSentStatus) = v;
+    return __tact_tuple_create_6(v'telegramId, v'walletAddress, v'score, v'ranking, v'prizeWon, v'prizeSentStatus);
+}
+
+tuple $WinnerInfo$_load_opt(cell cl) inline {
+    if (null?(cl)) {
+        return null();
+    }
+    var sc = cl.begin_parse();
+    return $WinnerInfo$_as_optional(sc~$WinnerInfo$_load());
+}
+
+((slice, slice, slice, int, int, int)) $WinnerInfo$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (slice vvv'telegramId, slice vvv'walletAddress, slice vvv'score, int vvv'ranking, int vvv'prizeWon, int vvv'prizeSentStatus) = __tact_tuple_destroy_6(v);
+    return (vvv'telegramId, vvv'walletAddress, vvv'score, vvv'ranking, vvv'prizeWon, vvv'prizeSentStatus);
+}
+
+;;
+;; Type: MatchInfo
+;; TLB: _ matchId:uint64 game:Game{id:uint32,name:^string} players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}> playerCount:uint32 coin:^string totalEntryFee:coins prizeShare:uint8 commissionFee:int257 rules:dict<int, ^RuleInfo{name:^string,value:^string}> ruleCount:uint32 status:uint8 winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchInfo
+;;
+
+builder $MatchInfo$_store(builder build_0, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline_ref {
+    var (v'matchId, (v'game'id, v'game'name), v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount) = v;
+    build_0 = build_0.store_uint(v'matchId, 64);
+    build_0 = $Game$_store(build_0, (v'game'id, v'game'name));
+    build_0 = build_0.store_dict(v'players);
+    build_0 = build_0.store_uint(v'playerCount, 32);
+    build_0 = build_0.store_ref(begin_cell().store_slice(v'coin).end_cell());
+    build_0 = build_0.store_coins(v'totalEntryFee);
+    build_0 = build_0.store_uint(v'prizeShare, 8);
+    build_0 = build_0.store_int(v'commissionFee, 257);
+    var build_1 = begin_cell();
+    build_1 = build_1.store_dict(v'rules);
+    build_1 = build_1.store_uint(v'ruleCount, 32);
+    build_1 = build_1.store_uint(v'status, 8);
+    build_1 = build_1.store_dict(v'winners);
+    build_1 = build_1.store_uint(v'winnerCount, 32);
+    build_0 = store_ref(build_0, build_1.end_cell());
+    return build_0;
+}
+
+cell $MatchInfo$_store_cell((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline {
+    return $MatchInfo$_store(begin_cell(), v).end_cell();
+}
+
+(slice, ((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int))) $MatchInfo$_load(slice sc_0) inline_ref {
+    var v'matchId = sc_0~load_uint(64);
+    var v'game = sc_0~$Game$_load();
+    var v'players = sc_0~load_dict();
+    var v'playerCount = sc_0~load_uint(32);
+    var v'coin = sc_0~load_ref().begin_parse();
+    var v'totalEntryFee = sc_0~load_coins();
+    var v'prizeShare = sc_0~load_uint(8);
+    var v'commissionFee = sc_0~load_int(257);
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'rules = sc_1~load_dict();
+    var v'ruleCount = sc_1~load_uint(32);
+    var v'status = sc_1~load_uint(8);
+    var v'winners = sc_1~load_dict();
+    var v'winnerCount = sc_1~load_uint(32);
+    return (sc_0, (v'matchId, v'game, v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount));
+}
+
+tuple $MatchInfo$_as_optional((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline {
+    var (v'matchId, (v'game'id, v'game'name), v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount) = v;
+    return __tact_tuple_create_14(v'matchId, v'game'id, v'game'name, v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount);
+}
+
+tuple $MatchInfo$_load_opt(cell cl) inline {
+    if (null?(cl)) {
+        return null();
+    }
+    var sc = cl.begin_parse();
+    return $MatchInfo$_as_optional(sc~$MatchInfo$_load());
+}
+
+((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MatchInfo$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (int vvv'matchId, int vvv'game'id, slice vvv'game'name, cell vvv'players, int vvv'playerCount, slice vvv'coin, int vvv'totalEntryFee, int vvv'prizeShare, int vvv'commissionFee, cell vvv'rules, int vvv'ruleCount, int vvv'status, cell vvv'winners, int vvv'winnerCount) = __tact_tuple_destroy_14(v);
+    return (vvv'matchId, (vvv'game'id, vvv'game'name), vvv'players, vvv'playerCount, vvv'coin, vvv'totalEntryFee, vvv'prizeShare, vvv'commissionFee, vvv'rules, vvv'ruleCount, vvv'status, vvv'winners, vvv'winnerCount);
+}
+
+tuple $MatchInfo$_to_tuple(((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) v) inline {
+    var (v'matchId, v'game, v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount) = v;
+    return __tact_tuple_create_13(v'matchId, $Game$_to_tuple(v'game), v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount);
+}
+
+tuple $MatchInfo$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $MatchInfo$_to_tuple($MatchInfo$_not_null(v)); 
+}
+
+tuple $MatchInfo$_to_opt_external(tuple v) inline {
+    var loaded = $MatchInfo$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
+;;
+;; Type: MatchResults
+;; TLB: _ winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchResults
+;;
+
+(slice, ((cell, int))) $MatchResults$_load(slice sc_0) inline {
+    var v'winners = sc_0~load_dict();
+    var v'winnerCount = sc_0~load_uint(32);
+    return (sc_0, (v'winners, v'winnerCount));
+}
+
+tuple $MatchResults$_as_optional((cell, int) v) inline {
+    var (v'winners, v'winnerCount) = v;
+    return __tact_tuple_create_2(v'winners, v'winnerCount);
+}
+
+((cell, int)) $MatchResults$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (cell vvv'winners, int vvv'winnerCount) = __tact_tuple_destroy_2(v);
+    return (vvv'winners, vvv'winnerCount);
+}
+
+;;
+;; Type: MatchInfoMsg
+;; Header: 0x253d7b57
+;; TLB: match_info_msg#253d7b57 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg
+;;
+
+(slice, (((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 624786263);
+    var v'matchInfo = sc_0~$MatchInfo$_load();
+    return (sc_0, (v'matchInfo));
+}
+
+;;
+;; Type: SendPrizeMsg
+;; Header: 0x57d6140a
+;; TLB: send_prize_msg#57d6140a seqno:int257 matchId:uint64 telegramId:^string walletAddress:address matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} commissionWalletAddress:Maybe address = SendPrizeMsg
+;;
+
+(slice, ((int, int, slice, slice, tuple, slice))) $SendPrizeMsg$_load(slice sc_0) inline_ref {
+    throw_unless(129, sc_0~load_uint(32) == 1473647626);
+    var v'seqno = sc_0~load_int(257);
+    var v'matchId = sc_0~load_uint(64);
+    var v'telegramId = sc_0~load_ref().begin_parse();
+    var v'walletAddress = sc_0~__tact_load_address();
+    var v'matchResults = sc_0~load_int(1) ? $MatchResults$_as_optional(sc_0~$MatchResults$_load()) : null();
+    var v'commissionWalletAddress = sc_0~__tact_load_address_opt();
+    return (sc_0, (v'seqno, v'matchId, v'telegramId, v'walletAddress, v'matchResults, v'commissionWalletAddress));
+}
+
+;;
+;; Type: RemoveMatchDumpMsg
+;; Header: 0xe5860637
+;; TLB: remove_match_dump_msg#e5860637 matchIds:dict<int, uint64> = RemoveMatchDumpMsg
+;;
+
+(slice, ((cell))) $RemoveMatchDumpMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3850765879);
+    var v'matchIds = sc_0~load_dict();
+    return (sc_0, (v'matchIds));
+}
+
+;;
+;; Type: WithdrawMsg
+;; Header: 0x1e16e476
+;; TLB: withdraw_msg#1e16e476 seqno:int257 amount:coins = WithdrawMsg
+;;
+
+(slice, ((int, int))) $WithdrawMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 504816758);
+    var v'seqno = sc_0~load_int(257);
+    var v'amount = sc_0~load_coins();
+    return (sc_0, (v'seqno, v'amount));
+}
+
+;;
+;; Type: MinBalanceMsg
+;; Header: 0x94887075
+;; TLB: min_balance_msg#94887075 value:coins = MinBalanceMsg
+;;
+
+(slice, ((int))) $MinBalanceMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2491969653);
+    var v'value = sc_0~load_coins();
+    return (sc_0, (v'value));
+}
+
+;;
+;; Type: MiniTonMatchContract
+;;
+
+builder $MiniTonMatchContract$_store(builder build_0, (slice, int, cell, int, int) v) inline {
+    var (v'owner, v'currentSeqno, v'matches, v'matchCount, v'minBalance) = v;
+    build_0 = __tact_store_address(build_0, v'owner);
+    build_0 = build_0.store_int(v'currentSeqno, 257);
+    build_0 = build_0.store_dict(v'matches);
+    build_0 = build_0.store_int(v'matchCount, 257);
+    build_0 = build_0.store_coins(v'minBalance);
+    return build_0;
+}
+
+(slice, ((slice, int, cell, int, int))) $MiniTonMatchContract$_load(slice sc_0) inline {
+    var v'owner = sc_0~__tact_load_address();
+    var v'currentSeqno = sc_0~load_int(257);
+    var v'matches = sc_0~load_dict();
+    var v'matchCount = sc_0~load_int(257);
+    var v'minBalance = sc_0~load_coins();
+    return (sc_0, (v'owner, v'currentSeqno, v'matches, v'matchCount, v'minBalance));
+}
+
+(slice, int, cell, int, int) $MiniTonMatchContract$_contract_load() impure inline_ref {
+    slice $sc = get_data().begin_parse();
+    __tact_context_sys = $sc~load_ref();
+    int $loaded = $sc~load_int(1);
+    if ($loaded) {
+        return $sc~$MiniTonMatchContract$_load();
+    } else {
+        ;; Allow only workchain deployments
+        throw_unless(137, my_address().preload_uint(11) == 1024);
+        return $MiniTonMatchContract$_contract_init();
+    }
+}
+
+() $MiniTonMatchContract$_contract_store((slice, int, cell, int, int) v) impure inline {
+    builder b = begin_cell();
+    b = b.store_ref(__tact_context_sys);
+    b = b.store_int(true, 1);
+    b = $MiniTonMatchContract$_store(b, v);
+    set_data(b.end_cell());
+}

@@ -1,7 +1,7 @@
 {
     "projects": [{
         "name": "MiniTon",
-        "path": "./sources/DoublePkGameContract.tact",
+        "path": "./sources/MiniTonMatchContract.tact",
         "output": "./sources/output",
         "options":{
             

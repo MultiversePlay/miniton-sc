@@ -1,0 +1,235 @@
+;;
+;; Header files for MiniTonMatchContract
+;; NOTE: declarations are sorted for optimal order
+;;
+
+;; __tact_verify_address
+slice __tact_verify_address(slice address) inline;
+
+;; __tact_load_address
+(slice, slice) __tact_load_address(slice cs) inline;
+
+;; __tact_load_address_opt
+(slice, slice) __tact_load_address_opt(slice cs) inline;
+
+;; __tact_store_address
+builder __tact_store_address(builder b, slice address) inline;
+
+;; __tact_store_address_opt
+builder __tact_store_address_opt(builder b, slice address) inline;
+
+;; __tact_my_balance
+int __tact_my_balance() inline;
+
+;; __tact_not_null
+forall X -> X __tact_not_null(X x) inline;
+
+;; __tact_context_get
+(int, slice, int, slice) __tact_context_get() inline;
+
+;; __tact_context_get_sender
+slice __tact_context_get_sender() inline;
+
+;; __tact_store_bool
+builder __tact_store_bool(builder b, int v) inline;
+
+;; __tact_dict_min_int_uint
+(int, int, int) __tact_dict_min_int_uint(cell d, int kl, int vl) inline;
+
+;; __tact_dict_next_int_uint
+(int, int, int) __tact_dict_next_int_uint(cell d, int kl, int pivot, int vl) inline;
+
+;; __tact_dict_set_int_cell
+(cell, ()) __tact_dict_set_int_cell(cell d, int kl, int k, cell v) inline;
+
+;; __tact_dict_get_int_cell
+cell __tact_dict_get_int_cell(cell d, int kl, int k) inline;
+
+;; __tact_dict_min_int_cell
+(int, cell, int) __tact_dict_min_int_cell(cell d, int kl) inline;
+
+;; __tact_dict_next_int_cell
+(int, cell, int) __tact_dict_next_int_cell(cell d, int kl, int pivot) inline;
+
+;; __tact_slice_eq_bits
+int __tact_slice_eq_bits(slice a, slice b) inline;
+
+;; __tact_slice_eq
+int __tact_slice_eq(slice a, slice b) inline;
+
+;; __tact_slice_neq
+int __tact_slice_neq(slice a, slice b) inline;
+
+;; __tact_string_builder_start
+tuple __tact_string_builder_start(builder b) inline;
+
+;; __tact_string_builder_start_string
+tuple __tact_string_builder_start_string() inline;
+
+;; __tact_string_builder_end
+cell __tact_string_builder_end(tuple builders) inline;
+
+;; __tact_string_builder_append
+((tuple), ()) __tact_string_builder_append(tuple builders, slice sc) inline_ref;
+
+;; __tact_int_to_string
+slice __tact_int_to_string(int src) inline_ref;
+
+;; $Deploy$_load
+(slice, ((int))) $Deploy$_load(slice sc_0) inline;
+
+;; $DeployOk$_store
+builder $DeployOk$_store(builder build_0, (int) v) inline;
+
+;; $DeployOk$_store_cell
+cell $DeployOk$_store_cell((int) v) inline;
+
+;; $Game$_store
+builder $Game$_store(builder build_0, (int, slice) v) inline;
+
+;; $Game$_load
+(slice, ((int, slice))) $Game$_load(slice sc_0) inline;
+
+;; $WinnerInfo$_store
+builder $WinnerInfo$_store(builder build_0, (slice, slice, slice, int, int, int) v) inline_ref;
+
+;; $WinnerInfo$_store_cell
+cell $WinnerInfo$_store_cell((slice, slice, slice, int, int, int) v) inline;
+
+;; $WinnerInfo$_load
+(slice, ((slice, slice, slice, int, int, int))) $WinnerInfo$_load(slice sc_0) inline_ref;
+
+;; $WinnerInfo$_as_optional
+tuple $WinnerInfo$_as_optional((slice, slice, slice, int, int, int) v) inline;
+
+;; $WinnerInfo$_load_opt
+tuple $WinnerInfo$_load_opt(cell cl) inline;
+
+;; $MatchInfo$_store
+builder $MatchInfo$_store(builder build_0, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline_ref;
+
+;; $MatchInfo$_store_cell
+cell $MatchInfo$_store_cell((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline;
+
+;; $MatchInfo$_load
+(slice, ((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int))) $MatchInfo$_load(slice sc_0) inline_ref;
+
+;; $MatchInfo$_as_optional
+tuple $MatchInfo$_as_optional((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline;
+
+;; $MatchInfo$_load_opt
+tuple $MatchInfo$_load_opt(cell cl) inline;
+
+;; $MatchResults$_load
+(slice, ((cell, int))) $MatchResults$_load(slice sc_0) inline;
+
+;; $MatchInfoMsg$_load
+(slice, (((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline;
+
+;; $MatchResults$_as_optional
+tuple $MatchResults$_as_optional((cell, int) v) inline;
+
+;; $SendPrizeMsg$_load
+(slice, ((int, int, slice, slice, tuple, slice))) $SendPrizeMsg$_load(slice sc_0) inline_ref;
+
+;; $RemoveMatchDumpMsg$_load
+(slice, ((cell))) $RemoveMatchDumpMsg$_load(slice sc_0) inline;
+
+;; $WithdrawMsg$_load
+(slice, ((int, int))) $WithdrawMsg$_load(slice sc_0) inline;
+
+;; $MinBalanceMsg$_load
+(slice, ((int))) $MinBalanceMsg$_load(slice sc_0) inline;
+
+;; $MiniTonMatchContract$_store
+builder $MiniTonMatchContract$_store(builder build_0, (slice, int, cell, int, int) v) inline;
+
+;; $MiniTonMatchContract$_load
+(slice, ((slice, int, cell, int, int))) $MiniTonMatchContract$_load(slice sc_0) inline;
+
+;; $StateInit$_not_null
+((cell, cell)) $StateInit$_not_null(tuple v) inline;
+
+;; $Game$_to_tuple
+tuple $Game$_to_tuple(((int, slice)) v) inline;
+
+;; $WinnerInfo$_not_null
+((slice, slice, slice, int, int, int)) $WinnerInfo$_not_null(tuple v) inline;
+
+;; $MatchInfo$_not_null
+((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MatchInfo$_not_null(tuple v) inline;
+
+;; $MatchInfo$_to_tuple
+tuple $MatchInfo$_to_tuple(((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) v) inline;
+
+;; $MatchInfo$_to_opt_tuple
+tuple $MatchInfo$_to_opt_tuple(tuple v) inline;
+
+;; $MatchInfo$_to_opt_external
+tuple $MatchInfo$_to_opt_external(tuple v) inline;
+
+;; $MatchResults$_not_null
+((cell, int)) $MatchResults$_not_null(tuple v) inline;
+
+;; $MiniTonMatchContract$_contract_init
+(slice, int, cell, int, int) $MiniTonMatchContract$_contract_init() impure inline_ref;
+
+;; $MiniTonMatchContract$_contract_load
+(slice, int, cell, int, int) $MiniTonMatchContract$_contract_load() impure inline_ref;
+
+;; $MiniTonMatchContract$_contract_store
+() $MiniTonMatchContract$_contract_store((slice, int, cell, int, int) v) impure inline;
+
+;; $global_send
+() $global_send((int, slice, int, int, cell, cell, cell) $params) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_incSeqno
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_incSeqno((slice, int, cell, int, int) $self) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_seqno
+((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_seqno((slice, int, cell, int, int) $self) impure inline_ref;
+
+;; $SendParameters$_constructor_to_bounce_value_mode_body
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_bounce_value_mode_body(slice to, int bounce, int value, int mode, cell body) inline;
+
+;; $MiniTonMatchContract$_fun_sendToncoin
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendToncoin((slice, int, cell, int, int) $self, slice $target, int $value, cell $body) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_recordMatchResults
+((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_recordMatchResults((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_sendMatchCommission
+((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_sendMatchCommission((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_sendMatchPrize
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendMatchPrize((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_minBalance
+((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_minBalance((slice, int, cell, int, int) $self) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_balance
+((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_balance((slice, int, cell, int, int) $self) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_matchInfo
+((slice, int, cell, int, int), tuple) $MiniTonMatchContract$_fun_matchInfo((slice, int, cell, int, int) $self, int $matchId) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_matchCount
+((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_matchCount((slice, int, cell, int, int) $self) impure inline_ref;
+
+;; $SendParameters$_constructor_bounce_to_value_mode_body_code_data
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_bounce_to_value_mode_body_code_data(int bounce, slice to, int value, int mode, cell body, cell code, cell data) inline;
+
+;; $MiniTonMatchContract$_fun_forward
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_forward((slice, int, cell, int, int) $self, slice $to, cell $body, int $bounce, tuple $init) impure inline_ref;
+
+;; $MiniTonMatchContract$_fun_reply
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_reply((slice, int, cell, int, int) $self, cell $body) impure inline;
+
+;; $MiniTonMatchContract$_fun_notify
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_notify((slice, int, cell, int, int) $self, cell $body) impure inline;
+
+;; $SendParameters$_constructor_to_bounce_value_mode
+((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_bounce_value_mode(slice to, int bounce, int value, int mode) inline;
+
+;; $DeployOk$_constructor_queryId
+((int)) $DeployOk$_constructor_queryId(int queryId) inline;
