@@ -658,7 +658,7 @@ PROGRAM{
   $SendPrizeMsg$_load PROCREF:<{
     32 LDU
     SWAP
-    1473647626 PUSHINT
+    2551490520 PUSHINT
     EQUAL
     129 THROWIFNOT
     257 PUSHINT
@@ -668,7 +668,7 @@ PROGRAM{
     SWAP
     CTOS
     SWAP
-    __tact_load_address INLINECALLDICT
+    __tact_load_address_opt INLINECALLDICT
     SWAP
     1 LDI
     SWAP
@@ -1145,13 +1145,15 @@ PROGRAM{
               __tact_string_builder_append INLINECALLDICT
               B{b5ee9c7241010101000300000229c132d319} B>boc <s PUSHSLICE
               __tact_string_builder_append INLINECALLDICT
+              s6 PUSH
+              __tact_not_null INLINECALLDICT
+              SWAP
               __tact_string_builder_end INLINECALLDICT
+              s6 27 s() XCHG
               s5 26 s() XCHG
               s4 25 s() XCHG
               s3 24 s() XCHG
               s2 23 s() XCHG
-              s1 22 s() XCHG
-              s6 s(-1) PUXC
               24 s() PUSH
               SWAP
               $MiniTonMatchContract$_fun_sendToncoin INLINECALLDICT
@@ -1162,6 +1164,7 @@ PROGRAM{
               s0 21 s() XCHG
             }>
             s5 PUSH
+            __tact_not_null INLINECALLDICT
             s0 s2 XCHG
             1 PUSHINT
             s6 s6 XCHG2
@@ -1539,7 +1542,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d57695a43356d685443736351616151646e743776726f6779663976717148676d434c55546a34373972716778} PUSHSLICE
+    x{697066733a2f2f516d55567845743655485532544365777733444343355056655972687979685937686d5251715650625546585946} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -1586,7 +1589,7 @@ PROGRAM{
       TRUE
     }>
     DUP
-    1473647626 PUSHINT
+    2551490520 PUSHINT
     EQUAL
     IFJMP:<{
       DROP

@@ -62,7 +62,7 @@ message SendPrizeMsg {
     seqno: Int;
     matchId: Int as uint64;
     telegramId: String;
-    walletAddress: Address;
+    walletAddress: Address?;
     matchResults: MatchResults?;
     commissionWalletAddress: Address?;
 }
@@ -200,9 +200,9 @@ contract MiniTonMatchContract with Deployable {
                             bodyMsg.append(",");
                             bodyMsg.append(winner.telegramId);
                             bodyMsg.append(")");
-                            self.sendToncoin(msg.walletAddress, winner.prizeWon, bodyMsg.toCell());
+                            self.sendToncoin(msg.walletAddress!!, winner.prizeWon, bodyMsg.toCell());
                         }
-                        winner.walletAddress = msg.walletAddress;
+                        winner.walletAddress = msg.walletAddress!!;
                         winner.prizeSentStatus = 1; // Prize sent
                         match.winners.set(key, winner);
                         modified = true;

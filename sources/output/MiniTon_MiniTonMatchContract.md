@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: MiniTonMatchContract
-BOC Size: 3150 bytes
+BOC Size: 3177 bytes
 
 # Types
 Total Types: 17
@@ -58,8 +58,8 @@ TLB: `match_info_msg#d7cb1619 seqno:int257 matchInfo:MatchInfo{matchId:uint64,ga
 Signature: `MatchInfoMsg{seqno:int257,matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}}`
 
 ## SendPrizeMsg
-TLB: `send_prize_msg#57d6140a seqno:int257 matchId:uint64 telegramId:^string walletAddress:address matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} commissionWalletAddress:Maybe address = SendPrizeMsg`
-Signature: `SendPrizeMsg{seqno:int257,matchId:uint64,telegramId:^string,walletAddress:address,matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32},commissionWalletAddress:Maybe address}`
+TLB: `send_prize_msg#9814a7d8 seqno:int257 matchId:uint64 telegramId:^string walletAddress:Maybe address matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} commissionWalletAddress:Maybe address = SendPrizeMsg`
+Signature: `SendPrizeMsg{seqno:int257,matchId:uint64,telegramId:^string,walletAddress:Maybe address,matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32},commissionWalletAddress:Maybe address}`
 
 ## RemoveMatchDumpMsg
 TLB: `remove_match_dump_msg#86912852 seqno:int257 matchIds:dict<int, uint64> = RemoveMatchDumpMsg`

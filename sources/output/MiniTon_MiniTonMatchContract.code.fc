@@ -102,9 +102,9 @@
                         $bodyMsg~__tact_string_builder_append(__gen_slice_string_4ee8888d01627a5b474e9faffd54b20b84dcc566933880a09b1be21640019c02());
                         $bodyMsg~__tact_string_builder_append($winner'telegramId);
                         $bodyMsg~__tact_string_builder_append(__gen_slice_string_d9e1b9d1e5ec3b458e098e3866f67493cd7f1f7092a1bc260d9d803a77cd2c33());
-                        ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendToncoin($msg'walletAddress, $winner'prizeWon, __tact_string_builder_end($bodyMsg));
+                        ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendToncoin(__tact_not_null($msg'walletAddress), $winner'prizeWon, __tact_string_builder_end($bodyMsg));
                     }
-                    $winner'walletAddress = $msg'walletAddress;
+                    $winner'walletAddress = __tact_not_null($msg'walletAddress);
                     $winner'prizeSentStatus = 1;
                     $match'winners~__tact_dict_set_int_cell(257, $key, $WinnerInfo$_store_cell(($winner'telegramId, $winner'walletAddress, $winner'score, $winner'ranking, $winner'prizeWon, $winner'prizeSentStatus)));
                     $modified = true;
@@ -287,7 +287,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmWiZC5mhTCscQaaQdnt7vrogyf9vqqHgmCLUTj479rqgx";
+    return "ipfs://QmUVxEt6UHU2TCeww3DCC5PVeYrhyyhY7hmRQqVPbUFXYF";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -325,7 +325,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive SendPrizeMsg message
-    if (op == 1473647626) {
+    if (op == 2551490520) {
         var msg = in_msg~$SendPrizeMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_SendPrizeMsg(msg);
         return (self, true);

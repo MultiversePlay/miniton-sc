@@ -253,16 +253,16 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 
 ;;
 ;; Type: SendPrizeMsg
-;; Header: 0x57d6140a
-;; TLB: send_prize_msg#57d6140a seqno:int257 matchId:uint64 telegramId:^string walletAddress:address matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} commissionWalletAddress:Maybe address = SendPrizeMsg
+;; Header: 0x9814a7d8
+;; TLB: send_prize_msg#9814a7d8 seqno:int257 matchId:uint64 telegramId:^string walletAddress:Maybe address matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} commissionWalletAddress:Maybe address = SendPrizeMsg
 ;;
 
 (slice, ((int, int, slice, slice, tuple, slice))) $SendPrizeMsg$_load(slice sc_0) inline_ref {
-    throw_unless(129, sc_0~load_uint(32) == 1473647626);
+    throw_unless(129, sc_0~load_uint(32) == 2551490520);
     var v'seqno = sc_0~load_int(257);
     var v'matchId = sc_0~load_uint(64);
     var v'telegramId = sc_0~load_ref().begin_parse();
-    var v'walletAddress = sc_0~__tact_load_address();
+    var v'walletAddress = sc_0~__tact_load_address_opt();
     var v'matchResults = sc_0~load_int(1) ? $MatchResults$_as_optional(sc_0~$MatchResults$_load()) : null();
     var v'commissionWalletAddress = sc_0~__tact_load_address_opt();
     return (sc_0, (v'seqno, v'matchId, v'telegramId, v'walletAddress, v'matchResults, v'commissionWalletAddress));
