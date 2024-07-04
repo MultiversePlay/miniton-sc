@@ -124,7 +124,7 @@ tuple $MatchInfo$_load_opt(cell cl) inline;
 (slice, ((cell, int))) $MatchResults$_load(slice sc_0) inline;
 
 ;; $MatchInfoMsg$_load
-(slice, (((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline;
+(slice, ((int, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline;
 
 ;; $MatchResults$_as_optional
 tuple $MatchResults$_as_optional((cell, int) v) inline;
@@ -133,13 +133,13 @@ tuple $MatchResults$_as_optional((cell, int) v) inline;
 (slice, ((int, int, slice, slice, tuple, slice))) $SendPrizeMsg$_load(slice sc_0) inline_ref;
 
 ;; $RemoveMatchDumpMsg$_load
-(slice, ((cell))) $RemoveMatchDumpMsg$_load(slice sc_0) inline;
+(slice, ((int, cell))) $RemoveMatchDumpMsg$_load(slice sc_0) inline;
 
 ;; $WithdrawMsg$_load
 (slice, ((int, int))) $WithdrawMsg$_load(slice sc_0) inline;
 
 ;; $MinBalanceMsg$_load
-(slice, ((int))) $MinBalanceMsg$_load(slice sc_0) inline;
+(slice, ((int, int))) $MinBalanceMsg$_load(slice sc_0) inline;
 
 ;; $MiniTonMatchContract$_store
 builder $MiniTonMatchContract$_store(builder build_0, (slice, int, cell, int, int) v) inline;

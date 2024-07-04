@@ -240,14 +240,15 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 
 ;;
 ;; Type: MatchInfoMsg
-;; Header: 0x253d7b57
-;; TLB: match_info_msg#253d7b57 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg
+;; Header: 0xd7cb1619
+;; TLB: match_info_msg#d7cb1619 seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg
 ;;
 
-(slice, (((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 624786263);
+(slice, ((int, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3620410905);
+    var v'seqno = sc_0~load_int(257);
     var v'matchInfo = sc_0~$MatchInfo$_load();
-    return (sc_0, (v'matchInfo));
+    return (sc_0, (v'seqno, v'matchInfo));
 }
 
 ;;
@@ -269,14 +270,15 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 
 ;;
 ;; Type: RemoveMatchDumpMsg
-;; Header: 0xe5860637
-;; TLB: remove_match_dump_msg#e5860637 matchIds:dict<int, uint64> = RemoveMatchDumpMsg
+;; Header: 0x86912852
+;; TLB: remove_match_dump_msg#86912852 seqno:int257 matchIds:dict<int, uint64> = RemoveMatchDumpMsg
 ;;
 
-(slice, ((cell))) $RemoveMatchDumpMsg$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 3850765879);
+(slice, ((int, cell))) $RemoveMatchDumpMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2257659986);
+    var v'seqno = sc_0~load_int(257);
     var v'matchIds = sc_0~load_dict();
-    return (sc_0, (v'matchIds));
+    return (sc_0, (v'seqno, v'matchIds));
 }
 
 ;;
@@ -294,14 +296,15 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 
 ;;
 ;; Type: MinBalanceMsg
-;; Header: 0x94887075
-;; TLB: min_balance_msg#94887075 value:coins = MinBalanceMsg
+;; Header: 0x04939755
+;; TLB: min_balance_msg#04939755 seqno:int257 value:coins = MinBalanceMsg
 ;;
 
-(slice, ((int))) $MinBalanceMsg$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2491969653);
+(slice, ((int, int))) $MinBalanceMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 76781397);
+    var v'seqno = sc_0~load_int(257);
     var v'value = sc_0~load_coins();
-    return (sc_0, (v'value));
+    return (sc_0, (v'seqno, v'value));
 }
 
 ;;

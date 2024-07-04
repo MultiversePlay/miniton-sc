@@ -152,15 +152,17 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MatchInfoMsg((slice, int, cell, int, int) $self, ((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $msg) impure inline {
+(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MatchInfoMsg((slice, int, cell, int, int) $self, (int, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $msg) impure inline {
     var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    var (($msg'matchInfo'matchId, ($msg'matchInfo'game'id, $msg'matchInfo'game'name), $msg'matchInfo'players, $msg'matchInfo'playerCount, $msg'matchInfo'coin, $msg'matchInfo'totalEntryFee, $msg'matchInfo'prizeShare, $msg'matchInfo'commissionFee, $msg'matchInfo'rules, $msg'matchInfo'ruleCount, $msg'matchInfo'status, $msg'matchInfo'winners, $msg'matchInfo'winnerCount)) = $msg;
+    var ($msg'seqno, ($msg'matchInfo'matchId, ($msg'matchInfo'game'id, $msg'matchInfo'game'name), $msg'matchInfo'players, $msg'matchInfo'playerCount, $msg'matchInfo'coin, $msg'matchInfo'totalEntryFee, $msg'matchInfo'prizeShare, $msg'matchInfo'commissionFee, $msg'matchInfo'rules, $msg'matchInfo'ruleCount, $msg'matchInfo'status, $msg'matchInfo'winners, $msg'matchInfo'winnerCount)) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     int $exist = (~ null?($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $msg'matchInfo'matchId))));
     $self'matches~__tact_dict_set_int_cell(257, $msg'matchInfo'matchId, $MatchInfo$_store_cell(($msg'matchInfo'matchId, ($msg'matchInfo'game'id, $msg'matchInfo'game'name), $msg'matchInfo'players, $msg'matchInfo'playerCount, $msg'matchInfo'coin, $msg'matchInfo'totalEntryFee, $msg'matchInfo'prizeShare, $msg'matchInfo'commissionFee, $msg'matchInfo'rules, $msg'matchInfo'ruleCount, $msg'matchInfo'status, $msg'matchInfo'winners, $msg'matchInfo'winnerCount)));
     if (($exist == false)) {
         $self'matchCount = $self'matchCount + 1;
     }
+    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
@@ -185,10 +187,11 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg((slice, int, cell, int, int) $self, (cell) $msg) impure inline {
+(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg((slice, int, cell, int, int) $self, (int, cell) $msg) impure inline {
     var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    var ($msg'matchIds) = $msg;
+    var ($msg'seqno, $msg'matchIds) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     var ($key, $value, $fresh$flag_2) = __tact_dict_min_int_uint($msg'matchIds, 257, 64);
     while ($fresh$flag_2) {
         if (($self'matches~__tact_dict_delete_int(257, $value) == true)) {
@@ -196,6 +199,7 @@
         }
         ($key, $value, $fresh$flag_2) = __tact_dict_next_int_uint($msg'matchIds, 257, $key, 64);
     }
+    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
     ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
@@ -220,11 +224,13 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MinBalanceMsg((slice, int, cell, int, int) $self, (int) $msg) impure inline {
+(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MinBalanceMsg((slice, int, cell, int, int) $self, (int, int) $msg) impure inline {
     var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    var ($msg'value) = $msg;
+    var ($msg'seqno, $msg'value) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     $self'minBalance = $msg'value;
+    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
     ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
@@ -281,7 +287,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmSUm4YCozwStfvQmy2HAEGhNQN6ZfZApXaYuA1bitXQuY";
+    return "ipfs://QmWiZC5mhTCscQaaQdnt7vrogyf9vqqHgmCLUTj479rqgx";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -312,7 +318,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive MatchInfoMsg message
-    if (op == 624786263) {
+    if (op == 3620410905) {
         var msg = in_msg~$MatchInfoMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_MatchInfoMsg(msg);
         return (self, true);
@@ -326,7 +332,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive RemoveMatchDumpMsg message
-    if (op == 3850765879) {
+    if (op == 2257659986) {
         var msg = in_msg~$RemoveMatchDumpMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg(msg);
         return (self, true);
@@ -340,7 +346,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive MinBalanceMsg message
-    if (op == 2491969653) {
+    if (op == 76781397) {
         var msg = in_msg~$MinBalanceMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_MinBalanceMsg(msg);
         return (self, true);

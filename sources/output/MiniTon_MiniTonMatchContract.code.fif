@@ -644,10 +644,13 @@ PROGRAM{
   $MatchInfoMsg$_load PROCINLINE:<{
     32 LDU
     SWAP
-    624786263 PUSHINT
+    3620410905 PUSHINT
     EQUAL
     129 THROWIFNOT
+    257 PUSHINT
+    LDIX
     $MatchInfo$_load INLINECALLDICT
+    s14 s15 XCHG
   }>
   $MatchResults$_as_optional PROCINLINE:<{
     2 TUPLE
@@ -685,11 +688,13 @@ PROGRAM{
   $RemoveMatchDumpMsg$_load PROCINLINE:<{
     32 LDU
     SWAP
-    3850765879 PUSHINT
+    2257659986 PUSHINT
     EQUAL
     129 THROWIFNOT
+    257 PUSHINT
+    LDIX
     LDDICT
-    SWAP
+    -ROT
   }>
   $WithdrawMsg$_load PROCINLINE:<{
     32 LDU
@@ -705,11 +710,13 @@ PROGRAM{
   $MinBalanceMsg$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2491969653 PUSHINT
+    76781397 PUSHINT
     EQUAL
     129 THROWIFNOT
+    257 PUSHINT
+    LDIX
     LDGRAMS
-    SWAP
+    -ROT
   }>
   $MiniTonMatchContract$_store PROCINLINE:<{
     s5 s4 XCHG2
@@ -1279,24 +1286,30 @@ PROGRAM{
   $MiniTonMatchContract$_internal_binary_MatchInfoMsg PROCINLINE:<{
     27831 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    20 s() PUSH
+    21 s() PUSH
     SWAP
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
+    11749 PUSHINT
+    s0 s15 XCHG
+    19 s() PUSH
+    EQUAL
+    s1 s15 XCHG
+    THROWANYIFNOT
     16 s() PUSH
     257 PUSHINT
-    s15 PUSH
+    s14 PUSH
     __tact_dict_get_int_cell INLINECALLDICT
     $MatchInfo$_load_opt INLINECALLDICT
     ISNULL
     NOT
-    s14 PUSH
-    12 3 BLKSWAP
+    s13 PUSH
+    12 2 BLKSWAP
     257 PUSHINT
-    s0 s15 XCHG
+    s0 16 s() XCHG
     $MatchInfo$_store_cell INLINECALLDICT
     s1 s6 XCHG
-    s1 s3 XCHG
+    s3 s3 s0 XCHG3
     __tact_dict_set_int_cell INLINECALLDICT
     s0 s3 XCHG
     0 EQINT
@@ -1305,6 +1318,7 @@ PROGRAM{
       INC
       SWAP
     }>
+    $MiniTonMatchContract$_fun_incSeqno INLINECALLDICT
   }>
   $MiniTonMatchContract$_internal_binary_SendPrizeMsg PROCINLINE:<{
     27831 PUSHINT
@@ -1395,8 +1409,13 @@ PROGRAM{
   $MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg PROCINLINE:<{
     27831 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s7 s(-1) PUXC
+    s8 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
+    THROWANYIFNOT
+    11749 PUSHINT
+    s2 s6 XCPU
+    EQUAL
+    s1 s2 XCHG
     THROWANYIFNOT
     DUP
     257 PUSHINT
@@ -1419,6 +1438,7 @@ PROGRAM{
       __tact_dict_next_int_uint INLINECALLDICT
     }>
     3 BLKDROP
+    $MiniTonMatchContract$_fun_incSeqno INLINECALLDICT
     B{b5ee9c7241010101000600000800000000e300af0f} B>boc PUSHREF
     $MiniTonMatchContract$_fun_reply INLINECALLDICT
   }>
@@ -1466,12 +1486,17 @@ PROGRAM{
     $MiniTonMatchContract$_fun_reply INLINECALLDICT
   }>
   $MiniTonMatchContract$_internal_binary_MinBalanceMsg PROCINLINE:<{
-    NIP
+    s2 POP
     27831 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    s6 s(-1) PUXC
+    s7 s(-1) PUXC
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
+    11749 PUSHINT
+    s1 s5 XCPU
+    EQUAL
+    THROWANYIFNOT
+    $MiniTonMatchContract$_fun_incSeqno INLINECALLDICT
     B{b5ee9c7241010101000600000800000000e300af0f} B>boc PUSHREF
     $MiniTonMatchContract$_fun_reply INLINECALLDICT
   }>
@@ -1514,7 +1539,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d53556d3459436f7a7753746676516d793248414547684e514e365a665a417058615975413162697458517559} PUSHSLICE
+    x{697066733a2f2f516d57695a43356d685443736351616151646e743776726f6779663976717148676d434c55546a34373972716778} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -1551,12 +1576,12 @@ PROGRAM{
       TRUE
     }>
     DUP
-    624786263 PUSHINT
+    3620410905 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $MatchInfoMsg$_load INLINECALLDICT
-      1 14 BLKDROP2
+      1 15 BLKDROP2
       $MiniTonMatchContract$_internal_binary_MatchInfoMsg INLINECALLDICT
       TRUE
     }>
@@ -1571,12 +1596,12 @@ PROGRAM{
       TRUE
     }>
     DUP
-    3850765879 PUSHINT
+    2257659986 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $RemoveMatchDumpMsg$_load INLINECALLDICT
-      NIP
+      1 2 BLKDROP2
       $MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg INLINECALLDICT
       TRUE
     }>
@@ -1591,12 +1616,12 @@ PROGRAM{
       TRUE
     }>
     DUP
-    2491969653 PUSHINT
+    76781397 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $MinBalanceMsg$_load INLINECALLDICT
-      NIP
+      1 2 BLKDROP2
       $MiniTonMatchContract$_internal_binary_MinBalanceMsg INLINECALLDICT
       TRUE
     }>

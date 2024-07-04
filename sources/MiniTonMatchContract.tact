@@ -53,6 +53,7 @@ struct MatchResults {
 
 // Message for recording match info
 message MatchInfoMsg {
+    seqno: Int;
     matchInfo: MatchInfo;
 }
 
@@ -68,6 +69,7 @@ message SendPrizeMsg {
 
 // Message for removing match dump
 message RemoveMatchDumpMsg {
+    seqno: Int;
     matchIds: map<Int, Int as uint64>;
 }
 
@@ -79,6 +81,7 @@ message WithdrawMsg {
 
 // Message for setting mininum balance
 message MinBalanceMsg {
+    seqno: Int;
     value: Int as coins;
 }
 
@@ -104,12 +107,15 @@ contract MiniTonMatchContract with Deployable {
     // Record match info and receive entry fee
     receive(msg: MatchInfoMsg) {
         require(sender() == self.owner, "Only owner can call this function");
+        require(msg.seqno == self.currentSeqno, "Invalid sequence number");
 
         let exist: Bool = self.matches.get(msg.matchInfo.matchId) != null;
         self.matches.set(msg.matchInfo.matchId, msg.matchInfo);
         if (exist == false) {
             self.matchCount += 1;
         }
+
+        self.incSeqno();
     }
 
     fun incSeqno() {
@@ -239,6 +245,7 @@ contract MiniTonMatchContract with Deployable {
 
     receive(msg: RemoveMatchDumpMsg) {
         require(sender() == self.owner, "Only owner can call this function");
+        require(msg.seqno == self.currentSeqno, "Invalid sequence number");
 
         foreach(key, value in msg.matchIds) {
             if (self.matches.del(value) == true) {
@@ -246,6 +253,7 @@ contract MiniTonMatchContract with Deployable {
             }
         }
 
+        self.incSeqno();
         self.reply("".asComment());
     }
     
@@ -276,13 +284,18 @@ contract MiniTonMatchContract with Deployable {
             value: 0,
             mode: SendRemainingBalance | SendIgnoreErrors
         });
+
         self.reply("".asComment());
     }
 
     // set mininum balance
     receive(msg: MinBalanceMsg) {
         require(sender() == self.owner, "Only owner can call this function");
+        require(msg.seqno == self.currentSeqno, "Invalid sequence number");
+
         self.minBalance = msg.value;
+
+        self.incSeqno();
         self.reply("".asComment());
     }
 
