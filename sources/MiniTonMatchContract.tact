@@ -36,7 +36,7 @@ struct MatchInfo {
     playerCount: Int as uint32;
     coin: String;
     totalEntryFee: Int as coins;
-    prizeShare: Int as uint8;
+    prizeShare: String;
     commissionFee: Int;
     rules: map<Int, RuleInfo>;
     ruleCount: Int as uint32;

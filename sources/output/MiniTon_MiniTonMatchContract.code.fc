@@ -41,7 +41,7 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_recordMatchResults((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
+((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_recordMatchResults((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
     var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     var (($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)) = $match;
     var (($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress)) = $msg;
@@ -64,7 +64,7 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount));
 }
 
-((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_sendMatchCommission((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
+((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_sendMatchCommission((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
     var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     var (($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)) = $match;
     var (($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress)) = $msg;
@@ -82,7 +82,7 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount));
 }
 
-((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendMatchPrize((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
+((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendMatchPrize((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
     var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     var (($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)) = $match;
     var (($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress)) = $msg;
@@ -152,7 +152,7 @@
     return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MatchInfoMsg((slice, int, cell, int, int) $self, (int, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $msg) impure inline {
+(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MatchInfoMsg((slice, int, cell, int, int) $self, (int, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $msg) impure inline {
     var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
     var ($msg'seqno, ($msg'matchInfo'matchId, ($msg'matchInfo'game'id, $msg'matchInfo'game'name), $msg'matchInfo'players, $msg'matchInfo'playerCount, $msg'matchInfo'coin, $msg'matchInfo'totalEntryFee, $msg'matchInfo'prizeShare, $msg'matchInfo'commissionFee, $msg'matchInfo'rules, $msg'matchInfo'ruleCount, $msg'matchInfo'status, $msg'matchInfo'winners, $msg'matchInfo'winnerCount)) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
@@ -287,7 +287,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmUVxEt6UHU2TCeww3DCC5PVeYrhyyhY7hmRQqVPbUFXYF";
+    return "ipfs://QmWT2dTRioDvJVLgpmbgRJzP1djHh5Hw4etNJAzZZ4Trtf";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -318,7 +318,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive MatchInfoMsg message
-    if (op == 3620410905) {
+    if (op == 317852652) {
         var msg = in_msg~$MatchInfoMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_MatchInfoMsg(msg);
         return (self, true);

@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: MiniTonMatchContract
-BOC Size: 3177 bytes
+BOC Size: 3182 bytes
 
 # Types
 Total Types: 17
@@ -46,16 +46,16 @@ TLB: `_ telegramId:^string walletAddress:Maybe address score:^string ranking:uin
 Signature: `WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}`
 
 ## MatchInfo
-TLB: `_ matchId:uint64 game:Game{id:uint32,name:^string} players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}> playerCount:uint32 coin:^string totalEntryFee:coins prizeShare:uint8 commissionFee:int257 rules:dict<int, ^RuleInfo{name:^string,value:^string}> ruleCount:uint32 status:uint8 winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchInfo`
-Signature: `MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}`
+TLB: `_ matchId:uint64 game:Game{id:uint32,name:^string} players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}> playerCount:uint32 coin:^string totalEntryFee:coins prizeShare:^string commissionFee:int257 rules:dict<int, ^RuleInfo{name:^string,value:^string}> ruleCount:uint32 status:uint8 winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchInfo`
+Signature: `MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}`
 
 ## MatchResults
 TLB: `_ winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchResults`
 Signature: `MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}`
 
 ## MatchInfoMsg
-TLB: `match_info_msg#d7cb1619 seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg`
-Signature: `MatchInfoMsg{seqno:int257,matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}}`
+TLB: `match_info_msg#12f20bec seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg`
+Signature: `MatchInfoMsg{seqno:int257,matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}}`
 
 ## SendPrizeMsg
 TLB: `send_prize_msg#9814a7d8 seqno:int257 matchId:uint64 telegramId:^string walletAddress:Maybe address matchResults:Maybe MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} commissionWalletAddress:Maybe address = SendPrizeMsg`

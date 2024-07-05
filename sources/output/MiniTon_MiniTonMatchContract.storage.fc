@@ -133,10 +133,10 @@ tuple $WinnerInfo$_load_opt(cell cl) inline {
 
 ;;
 ;; Type: MatchInfo
-;; TLB: _ matchId:uint64 game:Game{id:uint32,name:^string} players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}> playerCount:uint32 coin:^string totalEntryFee:coins prizeShare:uint8 commissionFee:int257 rules:dict<int, ^RuleInfo{name:^string,value:^string}> ruleCount:uint32 status:uint8 winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchInfo
+;; TLB: _ matchId:uint64 game:Game{id:uint32,name:^string} players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}> playerCount:uint32 coin:^string totalEntryFee:coins prizeShare:^string commissionFee:int257 rules:dict<int, ^RuleInfo{name:^string,value:^string}> ruleCount:uint32 status:uint8 winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchInfo
 ;;
 
-builder $MatchInfo$_store(builder build_0, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline_ref {
+builder $MatchInfo$_store(builder build_0, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) v) inline_ref {
     var (v'matchId, (v'game'id, v'game'name), v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount) = v;
     build_0 = build_0.store_uint(v'matchId, 64);
     build_0 = $Game$_store(build_0, (v'game'id, v'game'name));
@@ -144,9 +144,9 @@ builder $MatchInfo$_store(builder build_0, (int, (int, slice), cell, int, slice,
     build_0 = build_0.store_uint(v'playerCount, 32);
     build_0 = build_0.store_ref(begin_cell().store_slice(v'coin).end_cell());
     build_0 = build_0.store_coins(v'totalEntryFee);
-    build_0 = build_0.store_uint(v'prizeShare, 8);
-    build_0 = build_0.store_int(v'commissionFee, 257);
     var build_1 = begin_cell();
+    build_1 = build_1.store_ref(begin_cell().store_slice(v'prizeShare).end_cell());
+    build_1 = build_1.store_int(v'commissionFee, 257);
     build_1 = build_1.store_dict(v'rules);
     build_1 = build_1.store_uint(v'ruleCount, 32);
     build_1 = build_1.store_uint(v'status, 8);
@@ -156,20 +156,20 @@ builder $MatchInfo$_store(builder build_0, (int, (int, slice), cell, int, slice,
     return build_0;
 }
 
-cell $MatchInfo$_store_cell((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline {
+cell $MatchInfo$_store_cell((int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) v) inline {
     return $MatchInfo$_store(begin_cell(), v).end_cell();
 }
 
-(slice, ((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int))) $MatchInfo$_load(slice sc_0) inline_ref {
+(slice, ((int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int))) $MatchInfo$_load(slice sc_0) inline_ref {
     var v'matchId = sc_0~load_uint(64);
     var v'game = sc_0~$Game$_load();
     var v'players = sc_0~load_dict();
     var v'playerCount = sc_0~load_uint(32);
     var v'coin = sc_0~load_ref().begin_parse();
     var v'totalEntryFee = sc_0~load_coins();
-    var v'prizeShare = sc_0~load_uint(8);
-    var v'commissionFee = sc_0~load_int(257);
     slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'prizeShare = sc_1~load_ref().begin_parse();
+    var v'commissionFee = sc_1~load_int(257);
     var v'rules = sc_1~load_dict();
     var v'ruleCount = sc_1~load_uint(32);
     var v'status = sc_1~load_uint(8);
@@ -178,7 +178,7 @@ cell $MatchInfo$_store_cell((int, (int, slice), cell, int, slice, int, int, int,
     return (sc_0, (v'matchId, v'game, v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount));
 }
 
-tuple $MatchInfo$_as_optional((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int) v) inline {
+tuple $MatchInfo$_as_optional((int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) v) inline {
     var (v'matchId, (v'game'id, v'game'name), v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount) = v;
     return __tact_tuple_create_14(v'matchId, v'game'id, v'game'name, v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount);
 }
@@ -191,13 +191,13 @@ tuple $MatchInfo$_load_opt(cell cl) inline {
     return $MatchInfo$_as_optional(sc~$MatchInfo$_load());
 }
 
-((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) $MatchInfo$_not_null(tuple v) inline {
+((int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MatchInfo$_not_null(tuple v) inline {
     throw_if(128, null?(v));
-    var (int vvv'matchId, int vvv'game'id, slice vvv'game'name, cell vvv'players, int vvv'playerCount, slice vvv'coin, int vvv'totalEntryFee, int vvv'prizeShare, int vvv'commissionFee, cell vvv'rules, int vvv'ruleCount, int vvv'status, cell vvv'winners, int vvv'winnerCount) = __tact_tuple_destroy_14(v);
+    var (int vvv'matchId, int vvv'game'id, slice vvv'game'name, cell vvv'players, int vvv'playerCount, slice vvv'coin, int vvv'totalEntryFee, slice vvv'prizeShare, int vvv'commissionFee, cell vvv'rules, int vvv'ruleCount, int vvv'status, cell vvv'winners, int vvv'winnerCount) = __tact_tuple_destroy_14(v);
     return (vvv'matchId, (vvv'game'id, vvv'game'name), vvv'players, vvv'playerCount, vvv'coin, vvv'totalEntryFee, vvv'prizeShare, vvv'commissionFee, vvv'rules, vvv'ruleCount, vvv'status, vvv'winners, vvv'winnerCount);
 }
 
-tuple $MatchInfo$_to_tuple(((int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)) v) inline {
+tuple $MatchInfo$_to_tuple(((int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) v) inline {
     var (v'matchId, v'game, v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount) = v;
     return __tact_tuple_create_13(v'matchId, $Game$_to_tuple(v'game), v'players, v'playerCount, v'coin, v'totalEntryFee, v'prizeShare, v'commissionFee, v'rules, v'ruleCount, v'status, v'winners, v'winnerCount);
 }
@@ -240,12 +240,12 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 
 ;;
 ;; Type: MatchInfoMsg
-;; Header: 0xd7cb1619
-;; TLB: match_info_msg#d7cb1619 seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:uint8,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg
+;; Header: 0x12f20bec
+;; TLB: match_info_msg#12f20bec seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg
 ;;
 
-(slice, ((int, (int, (int, slice), cell, int, slice, int, int, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 3620410905);
+(slice, ((int, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)))) $MatchInfoMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 317852652);
     var v'seqno = sc_0~load_int(257);
     var v'matchInfo = sc_0~$MatchInfo$_load();
     return (sc_0, (v'seqno, v'matchInfo));
