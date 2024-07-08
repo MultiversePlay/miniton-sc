@@ -1,32 +1,31 @@
 # Read Me
 
-## About MiniTon Match Contract
-
-MiniTonMatchContract is a smart contract for managing match information, player details, and prize distribution.
-
-## User Scenario
+## About MiniTon
 MiniTon is a crypto social competitive platform, allow players play, compete, and invest in games with others worldwide for real prizes and meaningful connections.
 
-**Complete a Match in 5 Steps**
-1. Select a Game
-2. Choose a Match
-3. Pay the Entry Fee to join a match
-4. Match Opponents.Play and compete in games. Defeat the opponents.
-5. Confirm the Match Result to receive the prize
+**How to win in MiniTon**
+
+1. Launch [the MiniTon app](https://t.me/MiniTonBot) in Telegram
+2. Select a game and choose a match
+3. Pay the entry Fee
+4. MiniTon will match your opponents, You play and defeat the them.
+5. You need confirm the match result and receive the prize
+
+## About MiniTon Match Contract
+MiniTonMatchContract is a smart contract writed in **Tact** for managing match information, player details, and prize distribution.
 
 **Blockchain Integration**
 - Before the game starts, the entry fee is locked into the smart contract after match-making.
 - Competition data is stored on-chain.
 - Prize fulfillment is executed by smart contracts after player confirming match result.
 
-
-## Features
+## Contract Features
 
 - Record match information.
 - Manage player information and prize allocation.
 - Send prizes to winners and commission fees.
 
-## Structs
+## Contract Structs
 
 ### Game
 
@@ -179,7 +178,7 @@ MiniTonMatchContract is a smart contract for managing match information, player 
 - `winners`: Map of winners.
 - `winnerCount`: Number of winners.
 
-## Messages
+## Contract Messages
 
 ### MatchInfoMsg
 
