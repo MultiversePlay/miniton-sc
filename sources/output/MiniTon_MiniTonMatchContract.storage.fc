@@ -22,10 +22,6 @@
     return (bounce, to, value, mode, body, code, data);
 }
 
-((int, slice, int, int, cell, cell, cell)) $SendParameters$_constructor_to_bounce_value_mode(slice to, int bounce, int value, int mode) inline {
-    return (bounce, to, value, mode, null(), null(), null());
-}
-
 ;;
 ;; Type: Deploy
 ;; Header: 0x946a98b6
@@ -239,6 +235,105 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 }
 
 ;;
+;; Type: MasterActionRequest
+;; TLB: _ id:int257 action:uint8 timeout:uint32 status:uint8 weight:uint32 amount:int257 address:address voters:dict<address, bool> = MasterActionRequest
+;;
+
+builder $MasterActionRequest$_store(builder build_0, (int, int, int, int, int, int, slice, cell) v) inline_ref {
+    var (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
+    build_0 = build_0.store_int(v'id, 257);
+    build_0 = build_0.store_uint(v'action, 8);
+    build_0 = build_0.store_uint(v'timeout, 32);
+    build_0 = build_0.store_uint(v'status, 8);
+    build_0 = build_0.store_uint(v'weight, 32);
+    build_0 = build_0.store_int(v'amount, 257);
+    build_0 = __tact_store_address(build_0, v'address);
+    build_0 = build_0.store_dict(v'voters);
+    return build_0;
+}
+
+cell $MasterActionRequest$_store_cell((int, int, int, int, int, int, slice, cell) v) inline {
+    return $MasterActionRequest$_store(begin_cell(), v).end_cell();
+}
+
+(slice, ((int, int, int, int, int, int, slice, cell))) $MasterActionRequest$_load(slice sc_0) inline_ref {
+    var v'id = sc_0~load_int(257);
+    var v'action = sc_0~load_uint(8);
+    var v'timeout = sc_0~load_uint(32);
+    var v'status = sc_0~load_uint(8);
+    var v'weight = sc_0~load_uint(32);
+    var v'amount = sc_0~load_int(257);
+    var v'address = sc_0~__tact_load_address();
+    var v'voters = sc_0~load_dict();
+    return (sc_0, (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters));
+}
+
+tuple $MasterActionRequest$_as_optional((int, int, int, int, int, int, slice, cell) v) inline {
+    var (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
+    return __tact_tuple_create_8(v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters);
+}
+
+tuple $MasterActionRequest$_load_opt(cell cl) inline {
+    if (null?(cl)) {
+        return null();
+    }
+    var sc = cl.begin_parse();
+    return $MasterActionRequest$_as_optional(sc~$MasterActionRequest$_load());
+}
+
+((int, int, int, int, int, int, slice, cell)) $MasterActionRequest$_not_null(tuple v) inline {
+    throw_if(128, null?(v));
+    var (int vvv'id, int vvv'action, int vvv'timeout, int vvv'status, int vvv'weight, int vvv'amount, slice vvv'address, cell vvv'voters) = __tact_tuple_destroy_8(v);
+    return (vvv'id, vvv'action, vvv'timeout, vvv'status, vvv'weight, vvv'amount, vvv'address, vvv'voters);
+}
+
+tuple $MasterActionRequest$_to_tuple(((int, int, int, int, int, int, slice, cell)) v) inline {
+    var (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
+    return __tact_tuple_create_8(v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters);
+}
+
+tuple $MasterActionRequest$_to_opt_tuple(tuple v) inline {
+    if (null?(v)) { return null(); } 
+    return $MasterActionRequest$_to_tuple($MasterActionRequest$_not_null(v)); 
+}
+
+tuple $MasterActionRequest$_to_opt_external(tuple v) inline {
+    var loaded = $MasterActionRequest$_to_opt_tuple(v);
+    if (null?(loaded)) {
+        return null();
+    } else {
+        return (loaded);
+    }
+}
+
+;;
+;; Type: MasterActionRequestMsg
+;; Header: 0xa5ccce32
+;; TLB: master_action_request_msg#a5ccce32 seqno:int257 request:MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>} = MasterActionRequestMsg
+;;
+
+(slice, ((int, (int, int, int, int, int, int, slice, cell)))) $MasterActionRequestMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 2781662770);
+    var v'seqno = sc_0~load_int(257);
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'request = sc_1~$MasterActionRequest$_load();
+    return (sc_0, (v'seqno, v'request));
+}
+
+;;
+;; Type: VoteMsg
+;; Header: 0x53fd0b95
+;; TLB: vote_msg#53fd0b95 seqno:int257 requestId:int257 = VoteMsg
+;;
+
+(slice, ((int, int))) $VoteMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 1409092501);
+    var v'seqno = sc_0~load_int(257);
+    var v'requestId = sc_0~load_int(257);
+    return (sc_0, (v'seqno, v'requestId));
+}
+
+;;
 ;; Type: MatchInfoMsg
 ;; Header: 0x12f20bec
 ;; TLB: match_info_msg#12f20bec seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg
@@ -282,19 +377,6 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 }
 
 ;;
-;; Type: WithdrawMsg
-;; Header: 0x1e16e476
-;; TLB: withdraw_msg#1e16e476 seqno:int257 amount:coins = WithdrawMsg
-;;
-
-(slice, ((int, int))) $WithdrawMsg$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 504816758);
-    var v'seqno = sc_0~load_int(257);
-    var v'amount = sc_0~load_coins();
-    return (sc_0, (v'seqno, v'amount));
-}
-
-;;
 ;; Type: MinBalanceMsg
 ;; Header: 0x04939755
 ;; TLB: min_balance_msg#04939755 seqno:int257 value:coins = MinBalanceMsg
@@ -311,26 +393,45 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 ;; Type: MiniTonMatchContract
 ;;
 
-builder $MiniTonMatchContract$_store(builder build_0, (slice, int, cell, int, int) v) inline {
-    var (v'owner, v'currentSeqno, v'matches, v'matchCount, v'minBalance) = v;
+builder $MiniTonMatchContract$_store(builder build_0, (slice, cell, int, int, cell, int, int, cell, int, int) v) inline {
+    var (v'owner, v'voters, v'voterCount, v'weightRequired, v'masterActionRequests, v'masterActionRequestCounts, v'currentSeqno, v'matches, v'matchCount, v'minBalance) = v;
     build_0 = __tact_store_address(build_0, v'owner);
-    build_0 = build_0.store_int(v'currentSeqno, 257);
-    build_0 = build_0.store_dict(v'matches);
-    build_0 = build_0.store_int(v'matchCount, 257);
-    build_0 = build_0.store_coins(v'minBalance);
+    build_0 = build_0.store_dict(v'voters);
+    build_0 = build_0.store_int(v'voterCount, 257);
+    build_0 = build_0.store_int(v'weightRequired, 257);
+    build_0 = build_0.store_dict(v'masterActionRequests);
+    var build_1 = begin_cell();
+    build_1 = build_1.store_int(v'masterActionRequestCounts, 257);
+    build_1 = build_1.store_int(v'currentSeqno, 257);
+    build_1 = build_1.store_dict(v'matches);
+    build_1 = build_1.store_int(v'matchCount, 257);
+    build_1 = build_1.store_coins(v'minBalance);
+    build_0 = store_ref(build_0, build_1.end_cell());
     return build_0;
 }
 
-(slice, ((slice, int, cell, int, int))) $MiniTonMatchContract$_load(slice sc_0) inline {
+(slice, ((slice, cell, int, int, cell, int, int, cell, int, int))) $MiniTonMatchContract$_load(slice sc_0) inline {
     var v'owner = sc_0~__tact_load_address();
-    var v'currentSeqno = sc_0~load_int(257);
-    var v'matches = sc_0~load_dict();
-    var v'matchCount = sc_0~load_int(257);
-    var v'minBalance = sc_0~load_coins();
-    return (sc_0, (v'owner, v'currentSeqno, v'matches, v'matchCount, v'minBalance));
+    var v'voters = sc_0~load_dict();
+    var v'voterCount = sc_0~load_int(257);
+    var v'weightRequired = sc_0~load_int(257);
+    var v'masterActionRequests = sc_0~load_dict();
+    slice sc_1 = sc_0~load_ref().begin_parse();
+    var v'masterActionRequestCounts = sc_1~load_int(257);
+    var v'currentSeqno = sc_1~load_int(257);
+    var v'matches = sc_1~load_dict();
+    var v'matchCount = sc_1~load_int(257);
+    var v'minBalance = sc_1~load_coins();
+    return (sc_0, (v'owner, v'voters, v'voterCount, v'weightRequired, v'masterActionRequests, v'masterActionRequestCounts, v'currentSeqno, v'matches, v'matchCount, v'minBalance));
 }
 
-(slice, int, cell, int, int) $MiniTonMatchContract$_contract_load() impure inline_ref {
+(slice, ((int, cell))) $MiniTonMatchContract$init$_load(slice sc_0) inline {
+    var v'weightRequired = sc_0~load_int(257);
+    var v'voters = sc_0~load_dict();
+    return (sc_0, (v'weightRequired, v'voters));
+}
+
+(slice, cell, int, int, cell, int, int, cell, int, int) $MiniTonMatchContract$_contract_load() impure inline_ref {
     slice $sc = get_data().begin_parse();
     __tact_context_sys = $sc~load_ref();
     int $loaded = $sc~load_int(1);
@@ -339,11 +440,13 @@ builder $MiniTonMatchContract$_store(builder build_0, (slice, int, cell, int, in
     } else {
         ;; Allow only workchain deployments
         throw_unless(137, my_address().preload_uint(11) == 1024);
-        return $MiniTonMatchContract$_contract_init();
+        (int weightRequired, cell voters) = $sc~$MiniTonMatchContract$init$_load();
+        $sc.end_parse();
+        return $MiniTonMatchContract$_contract_init(weightRequired, voters);
     }
 }
 
-() $MiniTonMatchContract$_contract_store((slice, int, cell, int, int) v) impure inline {
+() $MiniTonMatchContract$_contract_store((slice, cell, int, int, cell, int, int, cell, int, int) v) impure inline {
     builder b = begin_cell();
     b = b.store_ref(__tact_context_sys);
     b = b.store_int(true, 1);

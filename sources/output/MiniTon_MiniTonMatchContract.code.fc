@@ -11,48 +11,67 @@
 ;; Contract MiniTonMatchContract functions
 ;;
 
-(slice, int, cell, int, int) $MiniTonMatchContract$_contract_init() impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = (null(), null(), null(), null(), null());
+(slice, cell, int, int, cell, int, int, cell, int, int) $MiniTonMatchContract$_contract_init(int $weightRequired, cell $voters) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = (null(), null(), null(), null(), null(), null(), null(), null(), null(), null());
     $self'owner = __tact_context_get_sender();
     $self'minBalance = 50000000;
     $self'currentSeqno = 0;
+    $self'voters = null();
+    $self'voterCount = 0;
+    var ($key, $value, $fresh$flag_0) = __tact_dict_min_slice_int($voters, 267, 1);
+    while ($fresh$flag_0) {
+        $self'voters~__tact_dict_set_slice_int(267, $key, $value, 1);
+        $self'voterCount = $self'voterCount + 1;
+        ($key, $value, $fresh$flag_0) = __tact_dict_next_slice_int($voters, 267, $key, 1);
+    }
+    if (($weightRequired > $self'voterCount)) {
+        $weightRequired = $self'voterCount;
+    }
+    $self'weightRequired = $weightRequired;
+    $self'masterActionRequests = null();
+    $self'masterActionRequestCounts = 0;
     $self'matches = null();
     $self'matchCount = 0;
-    return ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance);
+    return ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance);
 }
 
-((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_incSeqno((slice, int, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+((slice, cell, int, int, cell, int, int, cell, int, int), ()) $MiniTonMatchContract$_fun_incSeqno((slice, cell, int, int, cell, int, int, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     if (($self'currentSeqno >= 1000000000)) {
         $self'currentSeqno = 0;
     }
     $self'currentSeqno = $self'currentSeqno + 1;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_seqno((slice, int, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $self'currentSeqno);
+((slice, cell, int, int, cell, int, int, cell, int, int), int) $MiniTonMatchContract$_fun_seqno((slice, cell, int, int, cell, int, int, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $self'currentSeqno);
 }
 
-((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendToncoin((slice, int, cell, int, int) $self, slice $target, int $value, cell $body) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+((slice, cell, int, int, cell, int, int, cell, int, int), tuple) $MiniTonMatchContract$_fun_masterRequest((slice, cell, int, int, cell, int, int, cell, int, int) $self, int $id) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $id)));
+}
+
+((slice, cell, int, int, cell, int, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendToncoin((slice, cell, int, int, cell, int, int, cell, int, int) $self, slice $target, int $value, cell $body) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     $global_send($SendParameters$_constructor_to_bounce_value_mode_body($target, false, $value, 3, $body));
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_recordMatchResults((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+((slice, cell, int, int, cell, int, int, cell, int, int), (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_recordMatchResults((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     var (($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)) = $match;
     var (($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress)) = $msg;
     throw_unless(57905, (~ null?($msg'matchResults)));
     var ($matchResult'winners, $matchResult'winnerCount) = $MatchResults$_not_null($msg'matchResults);
     int $totalPrize = 0;
-    var ($key, $value, $fresh$flag_0) = __tact_dict_min_int_cell($matchResult'winners, 257);
-    while ($fresh$flag_0) {
+    var ($key, $value, $fresh$flag_1) = __tact_dict_min_int_cell($matchResult'winners, 257);
+    while ($fresh$flag_1) {
         var ($value'telegramId, $value'walletAddress, $value'score, $value'ranking, $value'prizeWon, $value'prizeSentStatus) = $WinnerInfo$_not_null($WinnerInfo$_load_opt($value));
         $totalPrize = $totalPrize + $value'prizeWon;
-        ($key, $value, $fresh$flag_0) = __tact_dict_next_int_cell($matchResult'winners, 257, $key);
+        ($key, $value, $fresh$flag_1) = __tact_dict_next_int_cell($matchResult'winners, 257, $key);
     }
     int $commissionFee = ($match'totalEntryFee - $totalPrize);
     throw_unless(15596, ($commissionFee > 0));
@@ -61,11 +80,11 @@
     $match'commissionFee = $commissionFee;
     $match'status = 1;
     $self'matches~__tact_dict_set_int_cell(257, $match'matchId, $MatchInfo$_store_cell(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)));
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount));
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount));
 }
 
-((slice, int, cell, int, int), (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_sendMatchCommission((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+((slice, cell, int, int, cell, int, int, cell, int, int), (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $MiniTonMatchContract$_fun_sendMatchCommission((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     var (($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)) = $match;
     var (($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress)) = $msg;
     if ((~ null?($msg'commissionWalletAddress))) {
@@ -74,22 +93,22 @@
             $bodyMsg~__tact_string_builder_append(__gen_slice_string_e8951c05640056da30377e398cda820e853b16d4f3869d3052247728b169104b());
             $bodyMsg~__tact_string_builder_append(__tact_int_to_string($match'matchId));
             $bodyMsg~__tact_string_builder_append(__gen_slice_string_d9e1b9d1e5ec3b458e098e3866f67493cd7f1f7092a1bc260d9d803a77cd2c33());
-            ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendToncoin(__tact_not_null($msg'commissionWalletAddress), $match'commissionFee, __tact_string_builder_end($bodyMsg));
+            ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendToncoin(__tact_not_null($msg'commissionWalletAddress), $match'commissionFee, __tact_string_builder_end($bodyMsg));
             $match'status = 2;
             $self'matches~__tact_dict_set_int_cell(257, $match'matchId, $MatchInfo$_store_cell(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)));
         }
     }
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount));
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount));
 }
 
-((slice, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendMatchPrize((slice, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+((slice, cell, int, int, cell, int, int, cell, int, int), ()) $MiniTonMatchContract$_fun_sendMatchPrize((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int) $match, (int, int, slice, slice, tuple, slice) $msg) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
     var (($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)) = $match;
     var (($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress)) = $msg;
     throw_unless(52677, ( (__tact_slice_neq(__gen_slice_string_96a296d224f285c67bee93c30f8a309157f0daa35dc5b87e410b78630a09cfc7(), $msg'telegramId)) ? ((~ null?($msg'walletAddress))) : (false) ));
     int $modified = false;
-    var ($key, $value, $fresh$flag_1) = __tact_dict_min_int_cell($match'winners, 257);
-    while ($fresh$flag_1) {
+    var ($key, $value, $fresh$flag_2) = __tact_dict_min_int_cell($match'winners, 257);
+    while ($fresh$flag_2) {
         var ($value'telegramId, $value'walletAddress, $value'score, $value'ranking, $value'prizeWon, $value'prizeSentStatus) = $WinnerInfo$_not_null($WinnerInfo$_load_opt($value));
         if (__tact_slice_eq($msg'telegramId, $value'telegramId)) {
             var ($winner'telegramId, $winner'walletAddress, $winner'score, $winner'ranking, $winner'prizeWon, $winner'prizeSentStatus) = ($value'telegramId, $value'walletAddress, $value'score, $value'ranking, $value'prizeWon, $value'prizeSentStatus);
@@ -102,7 +121,7 @@
                         $bodyMsg~__tact_string_builder_append(__gen_slice_string_4ee8888d01627a5b474e9faffd54b20b84dcc566933880a09b1be21640019c02());
                         $bodyMsg~__tact_string_builder_append($winner'telegramId);
                         $bodyMsg~__tact_string_builder_append(__gen_slice_string_d9e1b9d1e5ec3b458e098e3866f67493cd7f1f7092a1bc260d9d803a77cd2c33());
-                        ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendToncoin(__tact_not_null($msg'walletAddress), $winner'prizeWon, __tact_string_builder_end($bodyMsg));
+                        ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendToncoin(__tact_not_null($msg'walletAddress), $winner'prizeWon, __tact_string_builder_end($bodyMsg));
                     }
                     $winner'walletAddress = __tact_not_null($msg'walletAddress);
                     $winner'prizeSentStatus = 1;
@@ -115,45 +134,45 @@
                 }
             }
         }
-        ($key, $value, $fresh$flag_1) = __tact_dict_next_int_cell($match'winners, 257, $key);
+        ($key, $value, $fresh$flag_2) = __tact_dict_next_int_cell($match'winners, 257, $key);
     }
     if (($modified == true)) {
         $self'matches~__tact_dict_set_int_cell(257, $match'matchId, $MatchInfo$_store_cell(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)));
     }
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_minBalance((slice, int, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $self'minBalance);
+((slice, cell, int, int, cell, int, int, cell, int, int), int) $MiniTonMatchContract$_fun_minBalance((slice, cell, int, int, cell, int, int, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $self'minBalance);
 }
 
-((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_balance((slice, int, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), __tact_my_balance());
+((slice, cell, int, int, cell, int, int, cell, int, int), int) $MiniTonMatchContract$_fun_balance((slice, cell, int, int, cell, int, int, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), __tact_my_balance());
 }
 
-((slice, int, cell, int, int), tuple) $MiniTonMatchContract$_fun_matchInfo((slice, int, cell, int, int) $self, int $matchId) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $matchId)));
+((slice, cell, int, int, cell, int, int, cell, int, int), tuple) $MiniTonMatchContract$_fun_matchInfo((slice, cell, int, int, cell, int, int, cell, int, int) $self, int $matchId) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $matchId)));
 }
 
-((slice, int, cell, int, int), int) $MiniTonMatchContract$_fun_matchCount((slice, int, cell, int, int) $self) impure inline_ref {
-    var (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $self'matchCount);
+((slice, cell, int, int, cell, int, int, cell, int, int), int) $MiniTonMatchContract$_fun_matchCount((slice, cell, int, int, cell, int, int, cell, int, int) $self) impure inline_ref {
+    var (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), $self'matchCount);
 }
 
 ;;
 ;; Receivers of a Contract MiniTonMatchContract
 ;;
 
-(((slice, int, cell, int, int)), ()) %$MiniTonMatchContract$_internal_empty((slice, int, cell, int, int) $self) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) %$MiniTonMatchContract$_internal_empty((slice, cell, int, int, cell, int, int, cell, int, int) $self) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MatchInfoMsg((slice, int, cell, int, int) $self, (int, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $msg) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MatchInfoMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, (int, slice), cell, int, slice, int, slice, int, cell, int, int, cell, int)) $msg) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
     var ($msg'seqno, ($msg'matchInfo'matchId, ($msg'matchInfo'game'id, $msg'matchInfo'game'name), $msg'matchInfo'players, $msg'matchInfo'playerCount, $msg'matchInfo'coin, $msg'matchInfo'totalEntryFee, $msg'matchInfo'prizeShare, $msg'matchInfo'commissionFee, $msg'matchInfo'rules, $msg'matchInfo'ruleCount, $msg'matchInfo'status, $msg'matchInfo'winners, $msg'matchInfo'winnerCount)) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
@@ -162,84 +181,139 @@
     if (($exist == false)) {
         $self'matchCount = $self'matchCount + 1;
     }
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_SendPrizeMsg((slice, int, cell, int, int) $self, (int, int, slice, slice, tuple, slice) $msg) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MasterActionRequestMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, int, int, int, int, int, slice, cell)) $msg) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+    var ($msg'seqno, ($msg'request'id, $msg'request'action, $msg'request'timeout, $msg'request'status, $msg'request'weight, $msg'request'amount, $msg'request'address, $msg'request'voters)) = $msg;
+    throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
+    throw_unless(11749, ($msg'seqno == $self'currentSeqno));
+    throw_unless(26033, null?($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'request'id))));
+    $msg'request'status = 0;
+    $msg'request'weight = 0;
+    $msg'request'voters = null();
+    $self'masterActionRequests~__tact_dict_set_int_cell(257, $msg'request'id, $MasterActionRequest$_store_cell(($msg'request'id, $msg'request'action, $msg'request'timeout, $msg'request'status, $msg'request'weight, $msg'request'amount, $msg'request'address, $msg'request'voters)));
+    $self'masterActionRequestCounts = $self'masterActionRequestCounts + 1;
+    tuple $sbuilder = __tact_string_builder_start_string();
+    $sbuilder~__tact_string_builder_append(__gen_slice_string_d40e9802f42595b0439e754ba9f4373efe5d73bfabd1cd86b53b3e52b0f3147b());
+    $sbuilder~__tact_string_builder_append(__tact_int_to_string($msg'request'id));
+    $sbuilder~__tact_string_builder_append(__gen_slice_string_0673bcf9951028d85d254e110406146c9debd16d1900981ffd3aa6d809bac73e());
+    $sbuilder~__tact_string_builder_append($Int$_fun_toCoinsString($msg'request'amount));
+    $sbuilder~__tact_string_builder_append(__gen_slice_string_fa031d25753f8bf007f4970b589d3ebca62dfeb80c7e553cd64adb7a2eb03a5a());
+    $sbuilder~__tact_string_builder_append(__tact_address_to_user_friendly($msg'request'address));
+    $global_emit($String$_fun_asComment(__tact_string_builder_end_slice($sbuilder)));
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+}
+
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_VoteMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, int) $msg) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+    var ($msg'seqno, $msg'requestId) = $msg;
+    throw_unless(22944, __tact_int_eq_nullable_one(__tact_dict_get_slice_int($self'voters, 267, __tact_context_get_sender(), 1), true));
+    throw_unless(11749, ($msg'seqno == $self'currentSeqno));
+    throw_unless(6331, (~ null?($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'requestId)))));
+    var ($request'id, $request'action, $request'timeout, $request'status, $request'weight, $request'amount, $request'address, $request'voters) = $MasterActionRequest$_not_null($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'requestId)));
+    if (( (($request'status == 0)) ? (($request'amount > 0)) : (false) )) {
+        if (($request'timeout > now())) {
+            slice $sender = __tact_context_get_sender();
+            if (__tact_int_neq_nullable_one(__tact_dict_get_slice_int($request'voters, 267, $sender, 1), true)) {
+                $request'voters~__tact_dict_set_slice_int(267, $sender, true, 1);
+                $request'weight = $request'weight + 1;
+            }
+            if (($request'weight >= $self'weightRequired)) {
+                throw_unless(5370, ((__tact_my_balance() - $self'minBalance) > $request'amount));
+                tuple $bodyMsg = __tact_string_builder_start_string();
+                $bodyMsg~__tact_string_builder_append(__gen_slice_string_d3d2ed4084dba4e19f1e2aa46f73b022ac52a44f3e2bb33e8c39f63add88692b());
+                $bodyMsg~__tact_string_builder_append(__tact_int_to_string($request'id));
+                $global_send($SendParameters$_constructor_to_bounce_value_mode_body($request'address, true, $request'amount, 3, __tact_string_builder_end($bodyMsg)));
+                tuple $sbuilder = __tact_string_builder_start_string();
+                $sbuilder~__tact_string_builder_append(__gen_slice_string_20c51b9b41a74915a00d5ca5ae93fa51f1b159e03304feea053e627d824be8c1());
+                $sbuilder~__tact_string_builder_append(__tact_int_to_string($request'id));
+                $sbuilder~__tact_string_builder_append(__gen_slice_string_0673bcf9951028d85d254e110406146c9debd16d1900981ffd3aa6d809bac73e());
+                $sbuilder~__tact_string_builder_append($Int$_fun_toCoinsString($request'amount));
+                $sbuilder~__tact_string_builder_append(__gen_slice_string_fa031d25753f8bf007f4970b589d3ebca62dfeb80c7e553cd64adb7a2eb03a5a());
+                $sbuilder~__tact_string_builder_append(__tact_address_to_user_friendly($request'address));
+                $global_emit($String$_fun_asComment(__tact_string_builder_end_slice($sbuilder)));
+                $request'status = 1;
+            }
+        } else {
+            $request'status = 2;
+        }
+        $self'masterActionRequests~__tact_dict_set_int_cell(257, $request'id, $MasterActionRequest$_store_cell(($request'id, $request'action, $request'timeout, $request'status, $request'weight, $request'amount, $request'address, $request'voters)));
+    }
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+}
+
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_SendPrizeMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, int, slice, slice, tuple, slice) $msg) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
     var ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     throw_unless(40530, (~ null?($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $msg'matchId)))));
     var ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount) = $MatchInfo$_not_null($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $msg'matchId)));
     if (($match'status == 0)) {
-        ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount) = ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_recordMatchResults(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount), ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress));
+        ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount) = ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_recordMatchResults(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount), ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress));
     }
     if (($match'status == 1)) {
-        ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount) = ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendMatchCommission(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount), ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress));
+        ($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount) = ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendMatchCommission(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount), ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress));
     }
-    if (($match'status > 0)) {
-        ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendMatchPrize(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount), ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress));
+    if (($match'status > 1)) {
+        ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_sendMatchPrize(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount), ($msg'seqno, $msg'matchId, $msg'telegramId, $msg'walletAddress, $msg'matchResults, $msg'commissionWalletAddress));
     }
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg((slice, int, cell, int, int) $self, (int, cell) $msg) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, cell) $msg) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
     var ($msg'seqno, $msg'matchIds) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
-    var ($key, $value, $fresh$flag_2) = __tact_dict_min_int_uint($msg'matchIds, 257, 64);
-    while ($fresh$flag_2) {
+    int $ori = $self'matchCount;
+    var ($key, $value, $fresh$flag_3) = __tact_dict_min_int_uint($msg'matchIds, 257, 64);
+    while ($fresh$flag_3) {
         if (($self'matches~__tact_dict_delete_int(257, $value) == true)) {
             $self'matchCount = $self'matchCount - 1;
         }
-        ($key, $value, $fresh$flag_2) = __tact_dict_next_int_uint($msg'matchIds, 257, $key, 64);
+        ($key, $value, $fresh$flag_3) = __tact_dict_next_int_uint($msg'matchIds, 257, $key, 64);
     }
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    int $removedCount = ($ori - $self'matchCount);
+    tuple $comment = __tact_string_builder_start_string();
+    $comment~__tact_string_builder_append(__gen_slice_string_29f4107c0711af139820cb8ccdbcc0f8ea48920a83ede30b5bd4218655685802());
+    $comment~__tact_string_builder_append(__tact_int_to_string($removedCount));
+    $comment~__tact_string_builder_append(__gen_slice_string_fb7ba9d2e518819965fcb6c5b1f46b429ee91a49cdb44d4d8d158a0c9255c7f3());
+    $global_emit($String$_fun_asComment(__tact_string_builder_end_slice($comment)));
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_WithdrawMsg((slice, int, cell, int, int) $self, (int, int) $msg) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    var ($msg'seqno, $msg'amount) = $msg;
-    throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
-    throw_unless(17654, ($msg'seqno == $self'currentSeqno));
-    throw_unless(55591, ((__tact_my_balance() - $self'minBalance) >= $msg'amount));
-    $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, $msg'amount, 3));
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
-}
-
-((slice, int, cell, int, int), ()) $MiniTonMatchContract$_internal_text_5e517df1dfc75b2f2c174e93a5239b502cc03ae6c39bb2a6cf811060b104ffa0((slice, int, cell, int, int) $self) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
-    $global_send($SendParameters$_constructor_to_bounce_value_mode(__tact_context_get_sender(), true, 0, 130));
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
-}
-
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MinBalanceMsg((slice, int, cell, int, int) $self, (int, int) $msg) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MinBalanceMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, int) $msg) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
     var ($msg'seqno, $msg'value) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     $self'minBalance = $msg'value;
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    tuple $comment = __tact_string_builder_start_string();
+    $comment~__tact_string_builder_append(__gen_slice_string_332c9a945e65d0e66986db623252c12a32706e931c3ae59f56a57ded03533a21());
+    $comment~__tact_string_builder_append($Int$_fun_toCoinsString($self'minBalance));
+    $global_emit($String$_fun_asComment(__tact_string_builder_end_slice($comment)));
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_Deploy((slice, int, cell, int, int) $self, (int) $deploy) impure inline {
-    var ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_Deploy((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int) $deploy) impure inline {
+    var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
     var ($deploy'queryId) = $deploy;
-    ($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
-    return (($self'owner, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
+    ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_notify($DeployOk$_store_cell($DeployOk$_constructor_queryId($deploy'queryId)));
+    return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
 ;;
@@ -250,6 +324,13 @@ _ %seqno() method_id(85143) {
     var self = $MiniTonMatchContract$_contract_load();
     var res = self~$MiniTonMatchContract$_fun_seqno();
     return res;
+}
+
+_ %masterRequest(int $$id) method_id(82222) {
+    int $id = $$id;
+    var self = $MiniTonMatchContract$_contract_load();
+    var res = self~$MiniTonMatchContract$_fun_masterRequest($id);
+    return $MasterActionRequest$_to_opt_external(res);
 }
 
 _ %minBalance() method_id(70218) {
@@ -287,7 +368,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmWT2dTRioDvJVLgpmbgRJzP1djHh5Hw4etNJAzZZ4Trtf";
+    return "ipfs://QmeEW8BeA1pEzq5igwbyNPHqykktVYW5YMUqxT117wYXPs";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -298,7 +379,7 @@ _ lazy_deployment_completed() method_id {
 ;; Routing of a Contract MiniTonMatchContract
 ;;
 
-((slice, int, cell, int, int), int) $MiniTonMatchContract$_contract_router_internal((slice, int, cell, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
+((slice, cell, int, int, cell, int, int, cell, int, int), int) $MiniTonMatchContract$_contract_router_internal((slice, cell, int, int, cell, int, int, cell, int, int) self, int msg_bounced, slice in_msg) impure inline_ref {
     ;; Handle bounced messages
     if (msg_bounced) {
         return (self, true);
@@ -324,6 +405,20 @@ _ lazy_deployment_completed() method_id {
         return (self, true);
     }
     
+    ;; Receive MasterActionRequestMsg message
+    if (op == 2781662770) {
+        var msg = in_msg~$MasterActionRequestMsg$_load();
+        self~$MiniTonMatchContract$_internal_binary_MasterActionRequestMsg(msg);
+        return (self, true);
+    }
+    
+    ;; Receive VoteMsg message
+    if (op == 1409092501) {
+        var msg = in_msg~$VoteMsg$_load();
+        self~$MiniTonMatchContract$_internal_binary_VoteMsg(msg);
+        return (self, true);
+    }
+    
     ;; Receive SendPrizeMsg message
     if (op == 2551490520) {
         var msg = in_msg~$SendPrizeMsg$_load();
@@ -335,13 +430,6 @@ _ lazy_deployment_completed() method_id {
     if (op == 2257659986) {
         var msg = in_msg~$RemoveMatchDumpMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_RemoveMatchDumpMsg(msg);
-        return (self, true);
-    }
-    
-    ;; Receive WithdrawMsg message
-    if (op == 504816758) {
-        var msg = in_msg~$WithdrawMsg$_load();
-        self~$MiniTonMatchContract$_internal_binary_WithdrawMsg(msg);
         return (self, true);
     }
     
@@ -357,17 +445,6 @@ _ lazy_deployment_completed() method_id {
         var msg = in_msg~$Deploy$_load();
         self~$MiniTonMatchContract$_internal_binary_Deploy(msg);
         return (self, true);
-    }
-    
-    ;; Text Receivers
-    if (op == 0) {
-        var text_op = slice_hash(in_msg);
-        
-        ;; Receive "Withdraw all" message
-        if (text_op == 0x5e517df1dfc75b2f2c174e93a5239b502cc03ae6c39bb2a6cf811060b104ffa0) {
-            self~$MiniTonMatchContract$_internal_text_5e517df1dfc75b2f2c174e93a5239b502cc03ae6c39bb2a6cf811060b104ffa0();
-            return (self, true);
-        }
     }
     
     return (self, false);

@@ -51,6 +51,43 @@ struct MatchResults {
     winnerCount: Int as uint32;
 }
 
+/**
+ * Master action request
+ * id:      unique id
+ * action:
+ *      0 => None
+ *      1 => Withdraw
+ * status:
+ *      0 => Waiting for voting
+ *      1 => Accepted
+ *      2 => Timeout
+ * weight:  Current or final weight
+ * amount:  amount of nanoton
+ * address: Address of target wallet
+*/
+struct MasterActionRequest {
+    id: Int;
+    action: Int as uint8;
+    timeout: Int as uint32;
+    status: Int as uint8;
+    weight: Int as uint32;
+    amount: Int;
+    address: Address;
+    voters: map<Address, Bool>;
+}
+
+// Message for submit a master action request
+message MasterActionRequestMsg {
+    seqno: Int;
+    request: MasterActionRequest;
+}
+
+// Message for vote
+message VoteMsg {
+    seqno: Int;
+    requestId: Int;
+}
+
 // Message for recording match info
 message MatchInfoMsg {
     seqno: Int;
@@ -87,15 +124,34 @@ message MinBalanceMsg {
 
 contract MiniTonMatchContract with Deployable {
     owner: Address;
+    voters: map<Address, Bool>;
+    voterCount: Int;
+    weightRequired: Int;
+    masterActionRequests: map<Int, MasterActionRequest>;
+    masterActionRequestCounts: Int;
     currentSeqno: Int;
     matches: map<Int, MatchInfo>; // all matches 
     matchCount: Int;
     minBalance: Int as coins;
 
-    init() {
+    init(weightRequired: Int, voters: map<Address, Bool>) {
         self.owner = sender();
         self.minBalance = ton("0.05"); // default mininum = 0.05
         self.currentSeqno = 0;
+
+        self.voters = emptyMap();
+        self.voterCount = 0;
+        foreach(key, value in voters) {
+            self.voters.set(key, value);
+            self.voterCount += 1;
+        }
+        if (weightRequired > self.voterCount) {
+            weightRequired = self.voterCount;
+        }
+        self.weightRequired = weightRequired;
+
+        self.masterActionRequests = emptyMap();
+        self.masterActionRequestCounts = 0;
 
         self.matches = emptyMap();
         self.matchCount = 0;
@@ -127,6 +183,85 @@ contract MiniTonMatchContract with Deployable {
 
     get fun seqno(): Int {
         return self.currentSeqno;
+    }
+    
+    receive(msg: MasterActionRequestMsg) {
+        require(sender() == self.owner, "Only owner can call this function");
+        require(msg.seqno == self.currentSeqno, "Invalid sequence number");
+        require(self.masterActionRequests.get(msg.request.id) == null, "This id is already exists");
+
+        msg.request.status = 0;
+        msg.request.weight = 0;
+        msg.request.voters = emptyMap();
+        self.masterActionRequests.set(msg.request.id, msg.request);
+        self.masterActionRequestCounts += 1;
+
+        let sbuilder = beginString();
+        sbuilder.append("Withdraw Request(");
+        sbuilder.append(msg.request.id.toString());
+        sbuilder.append("): ");
+        sbuilder.append(msg.request.amount.toCoinsString());
+        sbuilder.append(" -> ");
+        sbuilder.append(msg.request.address.toString());
+        emit(sbuilder.toString().asComment());
+
+        self.incSeqno();
+        self.reply("".asComment());
+    }
+
+    receive(msg: VoteMsg) {
+        require(self.voters.get(sender()) == true, "Only voter can call this function");
+        require(msg.seqno == self.currentSeqno, "Invalid sequence number");
+        require(self.masterActionRequests.get(msg.requestId) != null, "Can not found this request");
+
+        let request = self.masterActionRequests.get(msg.requestId)!!;
+        if (request.status == 0 && request.amount > 0) {
+            if (request.timeout > now()) {
+                let sender = sender();
+                if (request.voters.get(sender) != true) {
+                    request.voters.set(sender, true);
+                    request.weight += 1;
+                }
+
+                if (request.weight >= self.weightRequired) {
+                    require(myBalance() - self.minBalance > request.amount, "Balance is not enough");
+
+                    let bodyMsg = beginString();
+                    bodyMsg.append("Withdaw Quest Id: ");
+                    bodyMsg.append(request.id.toString());
+                    send(SendParameters{
+                        to: request.address,
+                        bounce: true,
+                        value: request.amount,
+                        mode: SendPayGasSeparately | SendIgnoreErrors,
+                        body: bodyMsg.toCell()
+                    });
+
+                    let sbuilder = beginString();
+                    sbuilder.append("Execute Withdraw (");
+                    sbuilder.append(request.id.toString());
+                    sbuilder.append("): ");
+                    sbuilder.append(request.amount.toCoinsString());
+                    sbuilder.append(" -> ");
+                    sbuilder.append(request.address.toString());
+                    emit(sbuilder.toString().asComment());
+
+                    request.status = 1;
+                }
+            }
+            else { // timeout
+                request.status = 2;
+            }
+
+            self.masterActionRequests.set(request.id, request);
+        }
+
+        self.incSeqno();
+        self.reply("".asComment());
+    }
+
+    get fun masterRequest(id: Int): MasterActionRequest? {
+        return self.masterActionRequests.get(id);
     }
     
     fun sendToncoin(target: Address, value: Int, body: Cell) {
@@ -234,8 +369,8 @@ contract MiniTonMatchContract with Deployable {
             match = self.sendMatchCommission(match, msg);
         }
         
-        // send prize to winner even though commission not been paid
-        if (match.status > 0) {
+        // send prize to winner only after commissions are paid
+        if (match.status > 1) {
             self.sendMatchPrize(match, msg);
         }
 
@@ -247,44 +382,20 @@ contract MiniTonMatchContract with Deployable {
         require(sender() == self.owner, "Only owner can call this function");
         require(msg.seqno == self.currentSeqno, "Invalid sequence number");
 
+        let ori = self.matchCount;
         foreach(key, value in msg.matchIds) {
             if (self.matches.del(value) == true) {
                 self.matchCount -= 1;
             }
         }
 
+        let removedCount = ori - self.matchCount;
+        let comment = beginString();
+        comment.append("Removed ");
+        comment.append(removedCount.toString());
+        comment.append(" MatchDumps");
+        emit(comment.toString().asComment());
         self.incSeqno();
-        self.reply("".asComment());
-    }
-    
-    // withdraw balance
-    receive(msg: WithdrawMsg) {
-        require(sender() == self.owner, "Only owner can call this function");
-        require(msg.seqno == self.currentSeqno, "Invalid seqno");
-        require(myBalance() - self.minBalance >= msg.amount, "Insufficient contract balance");
-
-        send(SendParameters{
-            to: sender(),
-            bounce: true,
-            value: msg.amount,
-            mode: SendPayGasSeparately | SendIgnoreErrors
-        });
-
-        self.incSeqno();
-        self.reply("".asComment());
-    }
-
-    // withdraw all balance
-    receive("Withdraw all") {
-        require(sender() == self.owner, "Only owner can call this function");
-
-        send(SendParameters{
-            to: sender(),
-            bounce: true,
-            value: 0,
-            mode: SendRemainingBalance | SendIgnoreErrors
-        });
-
         self.reply("".asComment());
     }
 
@@ -295,6 +406,10 @@ contract MiniTonMatchContract with Deployable {
 
         self.minBalance = msg.value;
 
+        let comment = beginString();
+        comment.append("Set MinBalance to ");
+        comment.append(self.minBalance.toCoinsString());
+        emit(comment.toString().asComment());
         self.incSeqno();
         self.reply("".asComment());
     }

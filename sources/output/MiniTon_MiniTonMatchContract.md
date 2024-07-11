@@ -1,9 +1,9 @@
 # TACT Compilation Report
 Contract: MiniTonMatchContract
-BOC Size: 3182 bytes
+BOC Size: 4962 bytes
 
 # Types
-Total Types: 17
+Total Types: 20
 
 ## StateInit
 TLB: `_ code:^cell data:^cell = StateInit`
@@ -53,6 +53,18 @@ Signature: `MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:d
 TLB: `_ winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}> winnerCount:uint32 = MatchResults`
 Signature: `MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}`
 
+## MasterActionRequest
+TLB: `_ id:int257 action:uint8 timeout:uint32 status:uint8 weight:uint32 amount:int257 address:address voters:dict<address, bool> = MasterActionRequest`
+Signature: `MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>}`
+
+## MasterActionRequestMsg
+TLB: `master_action_request_msg#a5ccce32 seqno:int257 request:MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>} = MasterActionRequestMsg`
+Signature: `MasterActionRequestMsg{seqno:int257,request:MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>}}`
+
+## VoteMsg
+TLB: `vote_msg#53fd0b95 seqno:int257 requestId:int257 = VoteMsg`
+Signature: `VoteMsg{seqno:int257,requestId:int257}`
+
 ## MatchInfoMsg
 TLB: `match_info_msg#12f20bec seqno:int257 matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32} = MatchInfoMsg`
 Signature: `MatchInfoMsg{seqno:int257,matchInfo:MatchInfo{matchId:uint64,game:Game{id:uint32,name:^string},players:dict<int, ^PlayerInfo{telegramId:^string,walletAddress:Maybe address}>,playerCount:uint32,coin:^string,totalEntryFee:coins,prizeShare:^string,commissionFee:int257,rules:dict<int, ^RuleInfo{name:^string,value:^string}>,ruleCount:uint32,status:uint8,winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}}`
@@ -74,9 +86,12 @@ TLB: `min_balance_msg#04939755 seqno:int257 value:coins = MinBalanceMsg`
 Signature: `MinBalanceMsg{seqno:int257,value:coins}`
 
 # Get Methods
-Total Get Methods: 5
+Total Get Methods: 6
 
 ## seqno
+
+## masterRequest
+Argument: id
 
 ## minBalance
 
@@ -112,11 +127,13 @@ Argument: matchId
 135: Code of a contract was not found
 136: Invalid address
 137: Masterchain support is not enabled for this contract
+5370: Balance is not enough
+6331: Can not found this request
 11749: Invalid sequence number
 15596: totalPrize cannot be greater than or equal to totalEntryFee
-17654: Invalid seqno
+22944: Only voter can call this function
+26033: This id is already exists
 27831: Only owner can call this function
 40530: This match was not found
 52677: Invalid playerInfo
-55591: Insufficient contract balance
 57905: matchResults is invalid
