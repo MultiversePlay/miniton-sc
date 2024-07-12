@@ -215,7 +215,7 @@ contract MiniTonMatchContract with Deployable {
         require(self.masterActionRequests.get(msg.requestId) != null, "Can not found this request");
 
         let request = self.masterActionRequests.get(msg.requestId)!!;
-        if (request.status == 0 && request.amount > 0) {
+        if (request.action == 1 && request.status == 0 && request.amount > 0) {
             if (request.timeout > now()) {
                 let sender = sender();
                 if (request.voters.get(sender) != true) {
