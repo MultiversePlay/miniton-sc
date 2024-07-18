@@ -1000,13 +1000,12 @@ PROGRAM{
     -ROT
   }>
   $MasterActionRequest$_store PROCREF:<{
-    s7 s8 XCHG2
+    s6 s7 XCHG2
     257 PUSHINT
     STIX
-    s1 s5 XCHG
-    8 STU
-    s1 s3 XCHG
+    s1 s4 XCHG
     32 STU
+    s1 s2 XCHG
     8 STU
     32 STU
     257 PUSHINT
@@ -1017,14 +1016,13 @@ PROGRAM{
   }>
   $MasterActionRequest$_store_cell PROCINLINE:<{
     NEWC
-    8 -ROLL
+    7 -ROLL
     $MasterActionRequest$_store INLINECALLDICT
     ENDC
   }>
   $MasterActionRequest$_load PROCREF:<{
     257 PUSHINT
     LDIX
-    8 LDU
     32 LDU
     8 LDU
     32 LDU
@@ -1033,10 +1031,10 @@ PROGRAM{
     __tact_load_address INLINECALLDICT
     SWAP
     LDDICT
-    8 -ROLL
+    7 -ROLL
   }>
   $MasterActionRequest$_as_optional PROCINLINE:<{
-    8 TUPLE
+    7 TUPLE
   }>
   $MasterActionRequest$_load_opt PROCINLINE:<{
     DUP
@@ -1047,14 +1045,14 @@ PROGRAM{
     }>ELSE<{
       CTOS
       $MasterActionRequest$_load INLINECALLDICT
-      1 8 BLKDROP2
+      1 7 BLKDROP2
       $MasterActionRequest$_as_optional INLINECALLDICT
     }>
   }>
   $MasterActionRequestMsg$_load PROCINLINE:<{
     32 LDU
     SWAP
-    2781662770 PUSHINT
+    3569932528 PUSHINT
     EQUAL
     129 THROWIFNOT
     257 PUSHINT
@@ -1063,9 +1061,9 @@ PROGRAM{
     SWAP
     CTOS
     $MasterActionRequest$_load INLINECALLDICT
-    s8 POP
-    s8 s9 XCHG
-    7 ROLL
+    s7 POP
+    s7 s8 XCHG
+    6 ROLL
   }>
   $VoteMsg$_load PROCINLINE:<{
     32 LDU
@@ -1261,10 +1259,10 @@ PROGRAM{
     DUP
     ISNULL
     128 THROWIF
-    8 UNTUPLE
+    7 UNTUPLE
   }>
   $MasterActionRequest$_to_tuple PROCINLINE:<{
-    8 TUPLE
+    7 TUPLE
   }>
   $MasterActionRequest$_to_opt_tuple PROCINLINE:<{
     DUP
@@ -1792,7 +1790,6 @@ PROGRAM{
     }>
     s2 s4 XCHG
     4 BLKDROP
-    -1 EQINT
     IF:<{
       s13 PUSH
       12 2 BLKSWAP
@@ -1894,7 +1891,7 @@ PROGRAM{
     s3 s3 s0 XCHG3
     __tact_dict_set_int_cell INLINECALLDICT
     s0 s3 XCHG
-    0 EQINT
+    NOT
     IF:<{
       SWAP
       INC
@@ -1907,19 +1904,19 @@ PROGRAM{
     2 2 BLKDROP2
     27831 PUSHINT
     __tact_context_get_sender INLINECALLDICT
-    17 s() PUSH
+    16 s() PUSH
     SWAP
     __tact_slice_eq_bits INLINECALLDICT
     THROWANYIFNOT
     11749 PUSHINT
-    s6 s10 XCPU
+    s5 s9 XCPU
     EQUAL
-    s1 s6 XCHG
+    s1 s5 XCHG
     THROWANYIFNOT
     26033 PUSHINT
-    s11 PUSH
+    s10 PUSH
     257 PUSHINT
-    s6 PUSH
+    s5 PUSH
     __tact_dict_get_int_cell INLINECALLDICT
     $MasterActionRequest$_load_opt INLINECALLDICT
     ISNULL
@@ -1928,16 +1925,14 @@ PROGRAM{
     DUP
     PUSHNULL
     257 PUSHINT
-    s7 PUSH
-    s0 s5 XCHG
-    s4 s7 XCHG
+    s6 PUSH
+    s0 s4 XCHG
     s3 s6 XCHG
-    s7 s6 s0 XCHG3
-    s0 s9 s7 PU2XC
+    s6 s5 s2 XCPUXC
+    s9 s(-1) PUXC
     $MasterActionRequest$_store_cell INLINECALLDICT
-    s3 PUSH
-    s3 s11 XCHG
-    SWAP
+    s10 s10 s0 XCHG3
+    s3 s(-1) PUXC
     __tact_dict_set_int_cell INLINECALLDICT
     s0 s7 XCHG
     INC
@@ -2031,13 +2026,13 @@ PROGRAM{
         }>ELSE<{
           DROP
         }>
-        s3 s14 PUSH2
+        s3 s13 PUSH2
         GEQ
         IF:<{
           s4 POP
           5370 PUSHINT
           __tact_my_balance INLINECALLDICT
-          s9 PUSH
+          s8 PUSH
           SUB
           s3 PUSH
           GREATER
@@ -2045,7 +2040,7 @@ PROGRAM{
           __tact_string_builder_start_string INLINECALLDICT
           B{b5ee9c72410101010014000024576974686461772051756573742049643a20b83edd8a} B>boc <s PUSHSLICE
           __tact_string_builder_append INLINECALLDICT
-          s7 PUSH
+          s6 PUSH
           __tact_int_to_string INLINECALLDICT
           __tact_string_builder_append INLINECALLDICT
           TRUE
@@ -2059,7 +2054,7 @@ PROGRAM{
           __tact_string_builder_start_string INLINECALLDICT
           B{b5ee9c72410101010014000024457865637574652057697468647261772028a1c0a79a} B>boc <s PUSHSLICE
           __tact_string_builder_append INLINECALLDICT
-          s7 PUSH
+          s6 PUSH
           __tact_int_to_string INLINECALLDICT
           __tact_string_builder_append INLINECALLDICT
           B{b5ee9c72410101010005000006293a207431a9e3} B>boc <s PUSHSLICE
@@ -2082,17 +2077,16 @@ PROGRAM{
         2 PUSHINT
         s5 POP
       }>
+      257 PUSHINT
       s7 PUSH
       6 2 BLKSWAP
-      257 PUSHINT
-      s0 s8 XCHG
       $MasterActionRequest$_store_cell INLINECALLDICT
       s3 s8 XCHG
       s1 s2 XCHG
       __tact_dict_set_int_cell INLINECALLDICT
       s0 s5 XCHG
     }>ELSE<{
-      8 BLKDROP
+      7 BLKDROP
     }>
     $MiniTonMatchContract$_fun_incSeqno INLINECALLDICT
     B{b5ee9c7241010101000600000800000000e300af0f} B>boc PUSHREF
@@ -2225,7 +2219,6 @@ PROGRAM{
       s0 s6 XCHG2
       257 PUSHINT
       DICTIDEL
-      -1 EQINT
       IF:<{
         s0 s4 XCHG
         DEC
@@ -2325,7 +2318,7 @@ PROGRAM{
     209474421377847335869795010607481022628 PUSHINT
   }>
   get_abi_ipfs PROC:<{
-    x{697066733a2f2f516d654557384265413170457a713569677762794e504871796b6b7456595735594d557178543131377759585073} PUSHSLICE
+    x{697066733a2f2f516d645a3542637673694d714845394e4d574a544b7835794b78517a416854486e58615a346b6e43556d54385258} PUSHSLICE
   }>
   lazy_deployment_completed PROC:<{
     c4 PUSH
@@ -2370,12 +2363,12 @@ PROGRAM{
       TRUE
     }>
     DUP
-    2781662770 PUSHINT
+    3569932528 PUSHINT
     EQUAL
     IFJMP:<{
       DROP
       $MasterActionRequestMsg$_load INLINECALLDICT
-      1 9 BLKDROP2
+      1 8 BLKDROP2
       $MiniTonMatchContract$_internal_binary_MasterActionRequestMsg INLINECALLDICT
       TRUE
     }>

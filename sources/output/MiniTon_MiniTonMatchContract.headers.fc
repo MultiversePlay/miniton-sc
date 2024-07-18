@@ -160,22 +160,22 @@ tuple $MatchInfo$_load_opt(cell cl) inline;
 (slice, ((cell, int))) $MatchResults$_load(slice sc_0) inline;
 
 ;; $MasterActionRequest$_store
-builder $MasterActionRequest$_store(builder build_0, (int, int, int, int, int, int, slice, cell) v) inline_ref;
+builder $MasterActionRequest$_store(builder build_0, (int, int, int, int, int, slice, cell) v) inline_ref;
 
 ;; $MasterActionRequest$_store_cell
-cell $MasterActionRequest$_store_cell((int, int, int, int, int, int, slice, cell) v) inline;
+cell $MasterActionRequest$_store_cell((int, int, int, int, int, slice, cell) v) inline;
 
 ;; $MasterActionRequest$_load
-(slice, ((int, int, int, int, int, int, slice, cell))) $MasterActionRequest$_load(slice sc_0) inline_ref;
+(slice, ((int, int, int, int, int, slice, cell))) $MasterActionRequest$_load(slice sc_0) inline_ref;
 
 ;; $MasterActionRequest$_as_optional
-tuple $MasterActionRequest$_as_optional((int, int, int, int, int, int, slice, cell) v) inline;
+tuple $MasterActionRequest$_as_optional((int, int, int, int, int, slice, cell) v) inline;
 
 ;; $MasterActionRequest$_load_opt
 tuple $MasterActionRequest$_load_opt(cell cl) inline;
 
 ;; $MasterActionRequestMsg$_load
-(slice, ((int, (int, int, int, int, int, int, slice, cell)))) $MasterActionRequestMsg$_load(slice sc_0) inline;
+(slice, ((int, (int, int, int, int, int, slice, cell)))) $MasterActionRequestMsg$_load(slice sc_0) inline;
 
 ;; $VoteMsg$_load
 (slice, ((int, int))) $VoteMsg$_load(slice sc_0) inline;
@@ -226,10 +226,10 @@ tuple $MatchInfo$_to_opt_external(tuple v) inline;
 ((cell, int)) $MatchResults$_not_null(tuple v) inline;
 
 ;; $MasterActionRequest$_not_null
-((int, int, int, int, int, int, slice, cell)) $MasterActionRequest$_not_null(tuple v) inline;
+((int, int, int, int, int, slice, cell)) $MasterActionRequest$_not_null(tuple v) inline;
 
 ;; $MasterActionRequest$_to_tuple
-tuple $MasterActionRequest$_to_tuple(((int, int, int, int, int, int, slice, cell)) v) inline;
+tuple $MasterActionRequest$_to_tuple(((int, int, int, int, int, slice, cell)) v) inline;
 
 ;; $MasterActionRequest$_to_opt_tuple
 tuple $MasterActionRequest$_to_opt_tuple(tuple v) inline;

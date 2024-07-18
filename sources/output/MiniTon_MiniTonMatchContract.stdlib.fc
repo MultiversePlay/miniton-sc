@@ -254,9 +254,9 @@ forall X0, X1, X2, X3, X4, X5 -> tuple __tact_tuple_create_6((X0, X1, X2, X3, X4
 
 forall X0, X1, X2, X3, X4, X5 -> (X0, X1, X2, X3, X4, X5) __tact_tuple_destroy_6(tuple v) asm "6 UNTUPLE";
 
-forall X0, X1, X2, X3, X4, X5, X6, X7 -> tuple __tact_tuple_create_8((X0, X1, X2, X3, X4, X5, X6, X7) v) asm "8 TUPLE";
+forall X0, X1, X2, X3, X4, X5, X6 -> tuple __tact_tuple_create_7((X0, X1, X2, X3, X4, X5, X6) v) asm "7 TUPLE";
 
-forall X0, X1, X2, X3, X4, X5, X6, X7 -> (X0, X1, X2, X3, X4, X5, X6, X7) __tact_tuple_destroy_8(tuple v) asm "8 UNTUPLE";
+forall X0, X1, X2, X3, X4, X5, X6 -> (X0, X1, X2, X3, X4, X5, X6) __tact_tuple_destroy_7(tuple v) asm "7 UNTUPLE";
 
 forall X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12 -> tuple __tact_tuple_create_13((X0, X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12) v) asm "13 TUPLE";
 

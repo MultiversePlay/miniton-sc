@@ -1,6 +1,6 @@
 # TACT Compilation Report
 Contract: MiniTonMatchContract
-BOC Size: 4962 bytes
+BOC Size: 4950 bytes
 
 # Types
 Total Types: 20
@@ -54,12 +54,12 @@ TLB: `_ winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe add
 Signature: `MatchResults{winners:dict<int, ^WinnerInfo{telegramId:^string,walletAddress:Maybe address,score:^string,ranking:uint8,prizeWon:coins,prizeSentStatus:uint8}>,winnerCount:uint32}`
 
 ## MasterActionRequest
-TLB: `_ id:int257 action:uint8 timeout:uint32 status:uint8 weight:uint32 amount:int257 address:address voters:dict<address, bool> = MasterActionRequest`
-Signature: `MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>}`
+TLB: `_ id:int257 timeout:uint32 status:uint8 weight:uint32 amount:int257 address:address voters:dict<address, bool> = MasterActionRequest`
+Signature: `MasterActionRequest{id:int257,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>}`
 
 ## MasterActionRequestMsg
-TLB: `master_action_request_msg#a5ccce32 seqno:int257 request:MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>} = MasterActionRequestMsg`
-Signature: `MasterActionRequestMsg{seqno:int257,request:MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>}}`
+TLB: `master_action_request_msg#d4c8d8f0 seqno:int257 request:MasterActionRequest{id:int257,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>} = MasterActionRequestMsg`
+Signature: `MasterActionRequestMsg{seqno:int257,request:MasterActionRequest{id:int257,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>}}`
 
 ## VoteMsg
 TLB: `vote_msg#53fd0b95 seqno:int257 requestId:int257 = VoteMsg`

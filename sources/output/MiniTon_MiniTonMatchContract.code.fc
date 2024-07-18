@@ -136,7 +136,7 @@
         }
         ($key, $value, $fresh$flag_2) = __tact_dict_next_int_cell($match'winners, 257, $key);
     }
-    if (($modified == true)) {
+    if ($modified) {
         $self'matches~__tact_dict_set_int_cell(257, $match'matchId, $MatchInfo$_store_cell(($match'matchId, ($match'game'id, $match'game'name), $match'players, $match'playerCount, $match'coin, $match'totalEntryFee, $match'prizeShare, $match'commissionFee, $match'rules, $match'ruleCount, $match'status, $match'winners, $match'winnerCount)));
     }
     return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
@@ -178,23 +178,23 @@
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     int $exist = (~ null?($MatchInfo$_load_opt(__tact_dict_get_int_cell($self'matches, 257, $msg'matchInfo'matchId))));
     $self'matches~__tact_dict_set_int_cell(257, $msg'matchInfo'matchId, $MatchInfo$_store_cell(($msg'matchInfo'matchId, ($msg'matchInfo'game'id, $msg'matchInfo'game'name), $msg'matchInfo'players, $msg'matchInfo'playerCount, $msg'matchInfo'coin, $msg'matchInfo'totalEntryFee, $msg'matchInfo'prizeShare, $msg'matchInfo'commissionFee, $msg'matchInfo'rules, $msg'matchInfo'ruleCount, $msg'matchInfo'status, $msg'matchInfo'winners, $msg'matchInfo'winnerCount)));
-    if (($exist == false)) {
+    if ((~ $exist)) {
         $self'matchCount = $self'matchCount + 1;
     }
     ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
     return (($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance), ());
 }
 
-(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MasterActionRequestMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, int, int, int, int, int, slice, cell)) $msg) impure inline {
+(((slice, cell, int, int, cell, int, int, cell, int, int)), ()) $MiniTonMatchContract$_internal_binary_MasterActionRequestMsg((slice, cell, int, int, cell, int, int, cell, int, int) $self, (int, (int, int, int, int, int, slice, cell)) $msg) impure inline {
     var ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance) = $self;
-    var ($msg'seqno, ($msg'request'id, $msg'request'action, $msg'request'timeout, $msg'request'status, $msg'request'weight, $msg'request'amount, $msg'request'address, $msg'request'voters)) = $msg;
+    var ($msg'seqno, ($msg'request'id, $msg'request'timeout, $msg'request'status, $msg'request'weight, $msg'request'amount, $msg'request'address, $msg'request'voters)) = $msg;
     throw_unless(27831, ( __tact_slice_eq_bits($self'owner, __tact_context_get_sender()) ));
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     throw_unless(26033, null?($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'request'id))));
     $msg'request'status = 0;
     $msg'request'weight = 0;
     $msg'request'voters = null();
-    $self'masterActionRequests~__tact_dict_set_int_cell(257, $msg'request'id, $MasterActionRequest$_store_cell(($msg'request'id, $msg'request'action, $msg'request'timeout, $msg'request'status, $msg'request'weight, $msg'request'amount, $msg'request'address, $msg'request'voters)));
+    $self'masterActionRequests~__tact_dict_set_int_cell(257, $msg'request'id, $MasterActionRequest$_store_cell(($msg'request'id, $msg'request'timeout, $msg'request'status, $msg'request'weight, $msg'request'amount, $msg'request'address, $msg'request'voters)));
     $self'masterActionRequestCounts = $self'masterActionRequestCounts + 1;
     tuple $sbuilder = __tact_string_builder_start_string();
     $sbuilder~__tact_string_builder_append(__gen_slice_string_d40e9802f42595b0439e754ba9f4373efe5d73bfabd1cd86b53b3e52b0f3147b());
@@ -215,7 +215,7 @@
     throw_unless(22944, __tact_int_eq_nullable_one(__tact_dict_get_slice_int($self'voters, 267, __tact_context_get_sender(), 1), true));
     throw_unless(11749, ($msg'seqno == $self'currentSeqno));
     throw_unless(6331, (~ null?($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'requestId)))));
-    var ($request'id, $request'action, $request'timeout, $request'status, $request'weight, $request'amount, $request'address, $request'voters) = $MasterActionRequest$_not_null($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'requestId)));
+    var ($request'id, $request'timeout, $request'status, $request'weight, $request'amount, $request'address, $request'voters) = $MasterActionRequest$_not_null($MasterActionRequest$_load_opt(__tact_dict_get_int_cell($self'masterActionRequests, 257, $msg'requestId)));
     if (( (($request'status == 0)) ? (($request'amount > 0)) : (false) )) {
         if (($request'timeout > now())) {
             slice $sender = __tact_context_get_sender();
@@ -242,7 +242,7 @@
         } else {
             $request'status = 2;
         }
-        $self'masterActionRequests~__tact_dict_set_int_cell(257, $request'id, $MasterActionRequest$_store_cell(($request'id, $request'action, $request'timeout, $request'status, $request'weight, $request'amount, $request'address, $request'voters)));
+        $self'masterActionRequests~__tact_dict_set_int_cell(257, $request'id, $MasterActionRequest$_store_cell(($request'id, $request'timeout, $request'status, $request'weight, $request'amount, $request'address, $request'voters)));
     }
     ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_incSeqno();
     ($self'owner, $self'voters, $self'voterCount, $self'weightRequired, $self'masterActionRequests, $self'masterActionRequestCounts, $self'currentSeqno, $self'matches, $self'matchCount, $self'minBalance)~$MiniTonMatchContract$_fun_reply(__gen_cell_comment_3fe93897158698e4d473b74414d7493716b0fc3a70310934873f0019daaccab4());
@@ -278,7 +278,7 @@
     int $ori = $self'matchCount;
     var ($key, $value, $fresh$flag_3) = __tact_dict_min_int_uint($msg'matchIds, 257, 64);
     while ($fresh$flag_3) {
-        if (($self'matches~__tact_dict_delete_int(257, $value) == true)) {
+        if ($self'matches~__tact_dict_delete_int(257, $value)) {
             $self'matchCount = $self'matchCount - 1;
         }
         ($key, $value, $fresh$flag_3) = __tact_dict_next_int_uint($msg'matchIds, 257, $key, 64);
@@ -368,7 +368,7 @@ _ supported_interfaces() method_id {
 }
 
 _ get_abi_ipfs() method_id {
-    return "ipfs://QmeEW8BeA1pEzq5igwbyNPHqykktVYW5YMUqxT117wYXPs";
+    return "ipfs://QmdZ5BcvsiMqHE9NMWJTKx5yKxQzAhTHnXaZ4knCUmT8RX";
 }
 
 _ lazy_deployment_completed() method_id {
@@ -406,7 +406,7 @@ _ lazy_deployment_completed() method_id {
     }
     
     ;; Receive MasterActionRequestMsg message
-    if (op == 2781662770) {
+    if (op == 3569932528) {
         var msg = in_msg~$MasterActionRequestMsg$_load();
         self~$MiniTonMatchContract$_internal_binary_MasterActionRequestMsg(msg);
         return (self, true);

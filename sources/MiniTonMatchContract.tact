@@ -54,9 +54,6 @@ struct MatchResults {
 /**
  * Master action request
  * id:      unique id
- * action:
- *      0 => None
- *      1 => Withdraw
  * status:
  *      0 => Waiting for voting
  *      1 => Accepted
@@ -67,7 +64,6 @@ struct MatchResults {
 */
 struct MasterActionRequest {
     id: Int;
-    action: Int as uint8;
     timeout: Int as uint32;
     status: Int as uint8;
     weight: Int as uint32;
@@ -167,7 +163,7 @@ contract MiniTonMatchContract with Deployable {
 
         let exist: Bool = self.matches.get(msg.matchInfo.matchId) != null;
         self.matches.set(msg.matchInfo.matchId, msg.matchInfo);
-        if (exist == false) {
+        if (!exist) {
             self.matchCount += 1;
         }
 
@@ -215,7 +211,7 @@ contract MiniTonMatchContract with Deployable {
         require(self.masterActionRequests.get(msg.requestId) != null, "Can not found this request");
 
         let request = self.masterActionRequests.get(msg.requestId)!!;
-        if (request.action == 1 && request.status == 0 && request.amount > 0) {
+        if (request.status == 0 && request.amount > 0) {
             if (request.timeout > now()) {
                 let sender = sender();
                 if (request.voters.get(sender) != true) {
@@ -350,7 +346,7 @@ contract MiniTonMatchContract with Deployable {
             }
         }
 
-        if (modified == true) {
+        if (modified) {
             self.matches.set(match.matchId, match);
         }
     }
@@ -384,7 +380,7 @@ contract MiniTonMatchContract with Deployable {
 
         let ori = self.matchCount;
         foreach(key, value in msg.matchIds) {
-            if (self.matches.del(value) == true) {
+            if (self.matches.del(value)) {
                 self.matchCount -= 1;
             }
         }

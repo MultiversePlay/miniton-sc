@@ -236,13 +236,12 @@ tuple $MatchResults$_as_optional((cell, int) v) inline {
 
 ;;
 ;; Type: MasterActionRequest
-;; TLB: _ id:int257 action:uint8 timeout:uint32 status:uint8 weight:uint32 amount:int257 address:address voters:dict<address, bool> = MasterActionRequest
+;; TLB: _ id:int257 timeout:uint32 status:uint8 weight:uint32 amount:int257 address:address voters:dict<address, bool> = MasterActionRequest
 ;;
 
-builder $MasterActionRequest$_store(builder build_0, (int, int, int, int, int, int, slice, cell) v) inline_ref {
-    var (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
+builder $MasterActionRequest$_store(builder build_0, (int, int, int, int, int, slice, cell) v) inline_ref {
+    var (v'id, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
     build_0 = build_0.store_int(v'id, 257);
-    build_0 = build_0.store_uint(v'action, 8);
     build_0 = build_0.store_uint(v'timeout, 32);
     build_0 = build_0.store_uint(v'status, 8);
     build_0 = build_0.store_uint(v'weight, 32);
@@ -252,25 +251,24 @@ builder $MasterActionRequest$_store(builder build_0, (int, int, int, int, int, i
     return build_0;
 }
 
-cell $MasterActionRequest$_store_cell((int, int, int, int, int, int, slice, cell) v) inline {
+cell $MasterActionRequest$_store_cell((int, int, int, int, int, slice, cell) v) inline {
     return $MasterActionRequest$_store(begin_cell(), v).end_cell();
 }
 
-(slice, ((int, int, int, int, int, int, slice, cell))) $MasterActionRequest$_load(slice sc_0) inline_ref {
+(slice, ((int, int, int, int, int, slice, cell))) $MasterActionRequest$_load(slice sc_0) inline_ref {
     var v'id = sc_0~load_int(257);
-    var v'action = sc_0~load_uint(8);
     var v'timeout = sc_0~load_uint(32);
     var v'status = sc_0~load_uint(8);
     var v'weight = sc_0~load_uint(32);
     var v'amount = sc_0~load_int(257);
     var v'address = sc_0~__tact_load_address();
     var v'voters = sc_0~load_dict();
-    return (sc_0, (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters));
+    return (sc_0, (v'id, v'timeout, v'status, v'weight, v'amount, v'address, v'voters));
 }
 
-tuple $MasterActionRequest$_as_optional((int, int, int, int, int, int, slice, cell) v) inline {
-    var (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
-    return __tact_tuple_create_8(v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters);
+tuple $MasterActionRequest$_as_optional((int, int, int, int, int, slice, cell) v) inline {
+    var (v'id, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
+    return __tact_tuple_create_7(v'id, v'timeout, v'status, v'weight, v'amount, v'address, v'voters);
 }
 
 tuple $MasterActionRequest$_load_opt(cell cl) inline {
@@ -281,15 +279,15 @@ tuple $MasterActionRequest$_load_opt(cell cl) inline {
     return $MasterActionRequest$_as_optional(sc~$MasterActionRequest$_load());
 }
 
-((int, int, int, int, int, int, slice, cell)) $MasterActionRequest$_not_null(tuple v) inline {
+((int, int, int, int, int, slice, cell)) $MasterActionRequest$_not_null(tuple v) inline {
     throw_if(128, null?(v));
-    var (int vvv'id, int vvv'action, int vvv'timeout, int vvv'status, int vvv'weight, int vvv'amount, slice vvv'address, cell vvv'voters) = __tact_tuple_destroy_8(v);
-    return (vvv'id, vvv'action, vvv'timeout, vvv'status, vvv'weight, vvv'amount, vvv'address, vvv'voters);
+    var (int vvv'id, int vvv'timeout, int vvv'status, int vvv'weight, int vvv'amount, slice vvv'address, cell vvv'voters) = __tact_tuple_destroy_7(v);
+    return (vvv'id, vvv'timeout, vvv'status, vvv'weight, vvv'amount, vvv'address, vvv'voters);
 }
 
-tuple $MasterActionRequest$_to_tuple(((int, int, int, int, int, int, slice, cell)) v) inline {
-    var (v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
-    return __tact_tuple_create_8(v'id, v'action, v'timeout, v'status, v'weight, v'amount, v'address, v'voters);
+tuple $MasterActionRequest$_to_tuple(((int, int, int, int, int, slice, cell)) v) inline {
+    var (v'id, v'timeout, v'status, v'weight, v'amount, v'address, v'voters) = v;
+    return __tact_tuple_create_7(v'id, v'timeout, v'status, v'weight, v'amount, v'address, v'voters);
 }
 
 tuple $MasterActionRequest$_to_opt_tuple(tuple v) inline {
@@ -308,12 +306,12 @@ tuple $MasterActionRequest$_to_opt_external(tuple v) inline {
 
 ;;
 ;; Type: MasterActionRequestMsg
-;; Header: 0xa5ccce32
-;; TLB: master_action_request_msg#a5ccce32 seqno:int257 request:MasterActionRequest{id:int257,action:uint8,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>} = MasterActionRequestMsg
+;; Header: 0xd4c8d8f0
+;; TLB: master_action_request_msg#d4c8d8f0 seqno:int257 request:MasterActionRequest{id:int257,timeout:uint32,status:uint8,weight:uint32,amount:int257,address:address,voters:dict<address, bool>} = MasterActionRequestMsg
 ;;
 
-(slice, ((int, (int, int, int, int, int, int, slice, cell)))) $MasterActionRequestMsg$_load(slice sc_0) inline {
-    throw_unless(129, sc_0~load_uint(32) == 2781662770);
+(slice, ((int, (int, int, int, int, int, slice, cell)))) $MasterActionRequestMsg$_load(slice sc_0) inline {
+    throw_unless(129, sc_0~load_uint(32) == 3569932528);
     var v'seqno = sc_0~load_int(257);
     slice sc_1 = sc_0~load_ref().begin_parse();
     var v'request = sc_1~$MasterActionRequest$_load();
