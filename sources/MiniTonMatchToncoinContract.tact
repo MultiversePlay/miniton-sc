@@ -10,6 +10,8 @@ struct Game {
 struct PlayerInfo {
     telegramId: String;
     walletAddress: Address?;
+    entryType: String;
+    entryFee: Int as coins;
 }
 
 // Rule of allocating the prize
@@ -35,7 +37,7 @@ struct MatchInfo {
     players: map<Int, PlayerInfo>;
     playerCount: Int as uint32;
     coin: String;
-    totalEntryFee: Int as coins;
+    prizePool: Int as coins;
     prizeShare: String;
     commissionFee: Int;
     rules: map<Int, RuleInfo>;
@@ -106,19 +108,13 @@ message RemoveMatchDumpMsg {
     matchIds: map<Int, Int as uint64>;
 }
 
-// Message for withdrawing balance
-message WithdrawMsg {
-    seqno: Int;
-    amount: Int as coins;
-}
-
 // Message for setting mininum balance
 message MinBalanceMsg {
     seqno: Int;
     value: Int as coins;
 }
 
-contract MiniTonMatchContract with Deployable {
+contract MiniTonMatchToncoinContract with Deployable {
     owner: Address;
     voters: map<Address, Bool>;
     voterCount: Int;
@@ -130,8 +126,8 @@ contract MiniTonMatchContract with Deployable {
     matchCount: Int;
     minBalance: Int as coins;
 
-    init(weightRequired: Int, voters: map<Address, Bool>) {
-        self.owner = sender();
+    init(owner: Address, weightRequired: Int, voters: map<Address, Bool>) {
+        self.owner = owner;
         self.minBalance = ton("0.05"); // default mininum = 0.05
         self.currentSeqno = 0;
 
@@ -155,8 +151,12 @@ contract MiniTonMatchContract with Deployable {
 
     receive() {
     }
+
+    receive(comment: String) {
+
+    }
     
-    // Record match info and receive entry fee
+    // Record match info
     receive(msg: MatchInfoMsg) {
         require(sender() == self.owner, "Only owner can call this function");
         require(msg.seqno == self.currentSeqno, "Invalid sequence number");
@@ -168,6 +168,7 @@ contract MiniTonMatchContract with Deployable {
         }
 
         self.incSeqno();
+        self.reply("".asComment());
     }
 
     fun incSeqno() {
@@ -260,8 +261,9 @@ contract MiniTonMatchContract with Deployable {
         return self.masterActionRequests.get(id);
     }
     
-    fun sendToncoin(target: Address, value: Int, body: Cell) {
-        send(SendParameters{to: target, bounce: false, value: value, mode: SendPayGasSeparately | SendIgnoreErrors, body: body});
+    fun sendToncoin(target: Address, value: Int, comment: String) {
+        let commentCell = comment.asComment();
+        send(SendParameters{to: target, bounce: false, value: value, mode: SendPayGasSeparately | SendIgnoreErrors, body: commentCell});
     }
 
    /* Match status 
@@ -279,8 +281,8 @@ contract MiniTonMatchContract with Deployable {
         foreach(key, value in matchResult.winners) {
             totalPrize += value.prizeWon;
         }
-        let commissionFee = match.totalEntryFee - totalPrize;
-        require(commissionFee > 0, "totalPrize cannot be greater than or equal to totalEntryFee");
+        let commissionFee = match.prizePool - totalPrize;
+        require(commissionFee >= 0, "totalPrize cannot be greater than prizePool");
 
         match.winners = matchResult.winners;
         match.winnerCount = matchResult.winnerCount;
@@ -294,14 +296,17 @@ contract MiniTonMatchContract with Deployable {
     // Send Match Commission: 1 -> 2
     fun sendMatchCommission(match: MatchInfo, msg: SendPrizeMsg): MatchInfo {
         if (msg.commissionWalletAddress != null) {
-            if (match.commissionFee > 0 && 
+            if (match.commissionFee == 0) {
+                match.status = 2;
+                self.matches.set(match.matchId, match);
+            } else if (match.commissionFee > 0 && 
                 myBalance() - match.commissionFee > self.minBalance)
             {
                 let bodyMsg: StringBuilder = beginString();
                 bodyMsg.append("Match CommissionFee (");
                 bodyMsg.append(match.matchId.toString());
                 bodyMsg.append(")");
-                self.sendToncoin(msg.commissionWalletAddress!!, match.commissionFee, bodyMsg.toCell());
+                self.sendToncoin(msg.commissionWalletAddress!!, match.commissionFee, bodyMsg.toString());
                 match.status = 2;
                 self.matches.set(match.matchId, match);
             }
@@ -329,9 +334,9 @@ contract MiniTonMatchContract with Deployable {
                             bodyMsg.append("Match Prize (");
                             bodyMsg.append(match.matchId.toString());
                             bodyMsg.append(",");
-                            bodyMsg.append(winner.telegramId);
+                            bodyMsg.append(key.toString());
                             bodyMsg.append(")");
-                            self.sendToncoin(msg.walletAddress!!, winner.prizeWon, bodyMsg.toCell());
+                            self.sendToncoin(msg.walletAddress!!, winner.prizeWon, bodyMsg.toString());
                         }
                         winner.walletAddress = msg.walletAddress!!;
                         winner.prizeSentStatus = 1; // Prize sent

@@ -1,10 +1,17 @@
 {
     "projects": [{
         "name": "MiniTon",
-        "path": "./sources/MiniTonMatchContract.tact",
+        "path": "./sources/MiniTonMatchToncoinContract.tact",
         "output": "./sources/output",
         "options":{
             
+        }
+    }, {
+        "name": "MiniTon",
+        "path": "./sources/MiniTonMatchUSDTContract.tact",
+        "output": "./sources/output",
+        "options":{
+
         }
     }]
 }
